@@ -3,7 +3,7 @@
 /*
  * This file is part of Class Preloader.
  *
- * (c) Graham Campbell <graham@alt-three.com>
+ * (c) Graham Campbell <graham@cachethq.io>
  * (c) Michael Dowling <mtdowling@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -12,7 +12,7 @@
 
 namespace ClassPreloader\Parser;
 
-use ClassPreloader\Exceptions\SkipFileException;
+use ClassPreloader\Exception\SkipFileException;
 use PhpParser\Node;
 use PhpParser\Node\Scalar\MagicConst\File as FileNode;
 use PhpParser\Node\Scalar\String_ as StringNode;
@@ -48,9 +48,7 @@ class FileVisitor extends AbstractNodeVisitor
      *
      * @param \PhpParser\Node $node
      *
-     * @throws \ClassPreloader\Exceptions\SkipFileException
-     *
-     * @return \PhpParser\Node\Scalar\String_|null
+     * @return void
      */
     public function enterNode(Node $node)
     {

@@ -1,147 +1,135 @@
-<?php
+<?php namespace Illuminate\Foundation\Console;
 
-namespace Illuminate\Foundation\Console;
-
-use PhpParser\Lexer;
-use PhpParser\Parser;
 use Illuminate\Console\Command;
-use ClassPreloader\ClassPreloader;
 use Illuminate\Foundation\Composer;
-use ClassPreloader\Parser\DirVisitor;
-use ClassPreloader\Parser\FileVisitor;
-use ClassPreloader\Parser\NodeTraverser;
-use ClassPreloader\Exceptions\SkipFileException;
+use ClassPreloader\Command\PreCompileCommand;
 use Symfony\Component\Console\Input\InputOption;
-use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 
-class OptimizeCommand extends Command
-{
-    /**
-     * The console command name.
-     *
-     * @var string
-     */
-    protected $name = 'optimize';
+class OptimizeCommand extends Command {
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Optimize the framework for better performance';
+	/**
+	 * The console command name.
+	 *
+	 * @var string
+	 */
+	protected $name = 'optimize';
 
-    /**
-     * The composer instance.
-     *
-     * @var \Illuminate\Foundation\Composer
-     */
-    protected $composer;
+	/**
+	 * The console command description.
+	 *
+	 * @var string
+	 */
+	protected $description = "Optimize the framework for better performance";
 
-    /**
-     * Create a new optimize command instance.
-     *
-     * @param  \Illuminate\Foundation\Composer  $composer
-     * @return void
-     */
-    public function __construct(Composer $composer)
-    {
-        parent::__construct();
+	/**
+	 * The composer instance.
+	 *
+	 * @var \Illuminate\Foundation\Composer
+	 */
+	protected $composer;
 
-        $this->composer = $composer;
-    }
+	/**
+	 * Create a new optimize command instance.
+	 *
+	 * @param  \Illuminate\Foundation\Composer  $composer
+	 * @return void
+	 */
+	public function __construct(Composer $composer)
+	{
+		parent::__construct();
 
-    /**
-     * Execute the console command.
-     *
-     * @return void
-     */
-    public function fire()
-    {
-        $this->info('Generating optimized class loader');
+		$this->composer = $composer;
+	}
 
-        if ($this->option('psr')) {
-            $this->composer->dumpAutoloads();
-        } else {
-            $this->composer->dumpOptimized();
-        }
+	/**
+	 * Execute the console command.
+	 *
+	 * @return void
+	 */
+	public function fire()
+	{
+		$this->info('Generating optimized class loader');
 
-        if ($this->option('force') || !$this->laravel['config']['app.debug']) {
-            $this->info('Compiling common classes');
-            $this->compileClasses();
-        } else {
-            $this->call('clear-compiled');
-        }
-    }
+		if ($this->option('psr'))
+		{
+			$this->composer->dumpAutoloads();
+		}
+		else
+		{
+			$this->composer->dumpOptimized();
+		}
 
-    /**
-     * Generate the compiled class file.
-     *
-     * @return void
-     */
-    protected function compileClasses()
-    {
-        $preloader = new ClassPreloader(new PrettyPrinter, new Parser(new Lexer), $this->getTraverser());
+		if ($this->option('force') || ! $this->laravel['config']['app.debug'])
+		{
+			$this->info('Compiling common classes');
 
-        $handle = $preloader->prepareOutput($this->laravel->getCachedCompilePath());
+			$this->compileClasses();
+		}
+		else
+		{
+			$this->call('clear-compiled');
+		}
+	}
 
-        foreach ($this->getClassFiles() as $file) {
-            try {
-                fwrite($handle, $preloader->getCode($file, false)."\n");
-            } catch (SkipFileException $ex) {
-                //
-            }
-        }
+	/**
+	 * Generate the compiled class file.
+	 *
+	 * @return void
+	 */
+	protected function compileClasses()
+	{
+		$this->registerClassPreloaderCommand();
 
-        fclose($handle);
-    }
+		$this->callSilent('compile', array(
+			'--config' => implode(',', $this->getClassFiles()),
+			'--output' => $this->laravel->getCachedCompilePath(),
+			'--strip_comments' => 1,
+		));
+	}
 
-    /**
-     * Get the node traverser used by the command.
-     *
-     * @return \ClassPreloader\Parser\NodeTraverser
-     */
-    protected function getTraverser()
-    {
-        $traverser = new NodeTraverser();
+	/**
+	 * Get the classes that should be combined and compiled.
+	 *
+	 * @return array
+	 */
+	protected function getClassFiles()
+	{
+		$app = $this->laravel;
 
-        $traverser->addVisitor(new DirVisitor(true));
+		$core = require __DIR__.'/Optimize/config.php';
 
-        $traverser->addVisitor(new FileVisitor(true));
+		$files = array_merge($core, $this->laravel['config']->get('compile.files', []));
 
-        return $traverser;
-    }
+		foreach ($this->laravel['config']->get('compile.providers', []) as $provider)
+		{
+			$files = array_merge($files, forward_static_call([$provider, 'compiles']));
+		}
 
-    /**
-     * Get the classes that should be combined and compiled.
-     *
-     * @return array
-     */
-    protected function getClassFiles()
-    {
-        $app = $this->laravel;
+		return $files;
+	}
 
-        $core = require __DIR__.'/Optimize/config.php';
+	/**
+	 * Register the pre-compiler command instance with Artisan.
+	 *
+	 * @return void
+	 */
+	protected function registerClassPreloaderCommand()
+	{
+		$this->getApplication()->add(new PreCompileCommand);
+	}
 
-        $files = array_merge($core, $this->laravel['config']->get('compile.files', []));
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()
+	{
+		return array(
+			array('force', null, InputOption::VALUE_NONE, 'Force the compiled class file to be written.'),
 
-        foreach ($this->laravel['config']->get('compile.providers', []) as $provider) {
-            $files = array_merge($files, forward_static_call([$provider, 'compiles']));
-        }
+			array('psr', null, InputOption::VALUE_NONE, 'Do not optimize Composer dump-autoload.'),
+		);
+	}
 
-        return $files;
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['force', null, InputOption::VALUE_NONE, 'Force the compiled class file to be written.'],
-
-            ['psr', null, InputOption::VALUE_NONE, 'Do not optimize Composer dump-autoload.'],
-        ];
-    }
 }
