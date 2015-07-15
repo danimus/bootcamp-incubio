@@ -1,4 +1,5 @@
 <?php namespace App\Http\Controllers;
+use View;
 
 class HomeController extends Controller {
 
@@ -29,8 +30,9 @@ class HomeController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{
-		return view('home');
+	{	
+
+		return View::make('home');
 	}
 
 }
