@@ -4,11 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use Auth;
-use View;
-use Redirect;
 
-class UserController extends Controller {
+class ApiController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -17,7 +14,7 @@ class UserController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		return "Inside ApiController";
 	}
 
 	/**
@@ -71,29 +68,6 @@ class UserController extends Controller {
 	public function update($id)
 	{
 		//
-	}
-
-	
-	public function login()
-	{
-		// Verificamos que el usuario no esté autenticado
-        if (Auth::check())
-        {
-            // Si está autenticado lo mandamos a la raíz donde estara el mensaje de bienvenida.
-            return Redirect::to('v1/home');
-        }
-        // Mostramos la vista login.blade.php (Recordemos que .blade.php se omite.)
-        return View::make('auth/login');
-	}
-
-	public function register()
-	{
-		return View::make('auth/register');
-	}
-
-	public function remember()
-	{
-		return View::make('auth/password');	
 	}
 
 	/**
