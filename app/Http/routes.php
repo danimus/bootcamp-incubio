@@ -20,7 +20,7 @@ Route::get('/', 'UserController@login');
 //Pages for logged users
 Route::group(['middleware' => ['auth']], function() {
 	//User routes
-	Route::get('v1/home', 'HomeController@index');
+	Route::get('home', 'HomeController@index');
     Route::get('v1/user/register', 'UserController@register');
     Route::get('v1/user/login', 'UserController@login');
 	Route::get('v1/user/remember-password', 'UserController@remember');
