@@ -11,11 +11,20 @@
 |
 */
 
+//Default page
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+//Main page for logged users
+Route::get('v1/home', 'HomeController@index');
+
+
+//User's pages
+Route::get('v1/user/login', 'UserController@login');
+Route::get('v1/user/register', 'UserController@register');
+Route::get('v1/user/remember-password', 'UserController@remember');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
