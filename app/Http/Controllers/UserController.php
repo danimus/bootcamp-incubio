@@ -74,25 +74,22 @@ class UserController extends Controller {
 	}
 
 	
-	public function login()
-	{
+	public function login(){
 		// Verificamos que el usuario no esté autenticado
-        if (Auth::check())
-        {
+        if (Auth::check()){
             // Si está autenticado lo mandamos a la raíz donde estara el mensaje de bienvenida.
-            return Redirect::to('v1/home');
+            return Redirect::to('home');
         }
         // Mostramos la vista login.blade.php (Recordemos que .blade.php se omite.)
         return View::make('auth/login');
 	}
 
-	public function register()
-	{
+	public function register(){
+
 		return View::make('auth/register');
 	}
 
-	public function remember()
-	{
+	public function remember(){
 		return View::make('auth/password');	
 	}
 
