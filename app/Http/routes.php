@@ -17,11 +17,13 @@
 //Root page
 Route::get('/', 'UserController@login');
 
+Route::get('register', 'UserController@register');
+
+
 //Pages for logged users
 Route::group(['middleware' => ['auth']], function() {
 	//User routes
 	Route::get('home', 'HomeController@index');
-    Route::get('v1/user/register', 'UserController@register');
     Route::get('v1/user/login', 'UserController@login');
 	Route::get('v1/user/remember-password', 'UserController@remember');
 
@@ -31,7 +33,7 @@ Route::group(['middleware' => ['auth']], function() {
 	//Tags routes
 	Route::get('/v1/tags/add', 'TagsController@index');
 	Route::get('/v1/tags/delete', 'TagsController@index');
-	Route::get('/v1/tags/modify', 'TagsController@index');
+	Route::get('/v1/tags/get-tags-user', 'TagsController@index');
 
 	//Statistics routes
 	Route::get('/v1/statistics/global-trends', 'StatisticsController@index');

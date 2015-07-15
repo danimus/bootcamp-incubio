@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 
-class comUtils{
+class ComUtils{
 
 	public function request($success, $message_error, $body)
 	{
