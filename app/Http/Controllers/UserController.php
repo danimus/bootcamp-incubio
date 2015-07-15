@@ -76,9 +76,10 @@ class UserController extends Controller {
 	
 	public function login()
 	{
+
 		// Verificamos que el usuario no esté autenticado
         if (Auth::check())
-        {
+        { 
             // Si está autenticado lo mandamos a la raíz donde estara el mensaje de bienvenida.
             return Redirect::to('v1/home');
         }
@@ -88,6 +89,7 @@ class UserController extends Controller {
 
 	public function register()
 	{
+
 		return View::make('auth/register');
 	}
 
