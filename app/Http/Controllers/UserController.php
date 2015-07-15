@@ -74,6 +74,7 @@ class UserController extends Controller {
 	}
 
 	
+<<<<<<< HEAD
 
 
 	public function login(){
@@ -81,6 +82,11 @@ class UserController extends Controller {
 		// Verificamos que el usuario no esté autenticado
         if (Auth::check()){
 
+=======
+	public function login(){
+		// Verificamos que el usuario no esté autenticado
+        if (Auth::check()){
+>>>>>>> origin/sara
             // Si está autenticado lo mandamos a la raíz donde estara el mensaje de bienvenida.
             return Redirect::to('home');
         }
@@ -88,12 +94,17 @@ class UserController extends Controller {
         return View::make('auth/login');
 	}
 
+<<<<<<< HEAD
 
 
 
 	public function register(){
 
 
+=======
+	public function register(){
+
+>>>>>>> origin/sara
 		return View::make('auth/register');
 	}
 
