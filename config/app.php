@@ -144,7 +144,11 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+<<<<<<< HEAD
 		'App\Providers\ResponseAPIServiceProvider'
+=======
+		'App\Providers\ResponseAPIServiceProvider',
+>>>>>>> origin/development
 
 	],
 

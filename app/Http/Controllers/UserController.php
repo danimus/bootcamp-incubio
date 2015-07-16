@@ -11,10 +11,13 @@ use Response;
 use Input;
 use Hash;
 use Illuminate\Database\QueryException as QueryException;
+<<<<<<< HEAD
 use ResetsPasswords;
 use Mail;
 use Password;
 use Illuminate\Auth\Passwords\PasswordBroker;
+=======
+>>>>>>> origin/development
 
 class UserController extends Controller {
 
