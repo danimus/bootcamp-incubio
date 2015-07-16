@@ -21,12 +21,9 @@ Route::get('/', 'UserController@login');
 Route::group(['middleware' => ['auth']], function() {
 	//User routes
 	Route::get('home', 'HomeController@index');
-    Route::get('v1/user/register', 'UserController@register');
-    Route::get('v1/user/login', 'UserController@login');
+    	Route::get('v1/user/register', 'UserController@register');
+    	Route::get('v1/user/login', 'UserController@login');
 	Route::get('v1/user/remember-password', 'UserController@remember');
-
-	//Api routes
-	Route::get('/v1/api/response', 'ApiController@index');
 
 	//Tags routes
 	Route::get('/v1/tags/add', 'TagsController@index');
