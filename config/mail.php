@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
+	'from' => ['address' => 'mediatweet.incubio@gmail.com', 'name' => 'MediaTweet'],
 
 	/*
 	|--------------------------------------------------------------------------

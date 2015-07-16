@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model {
+class tags extends Model {
 
 	protected $table='tags';
 
