@@ -11,6 +11,8 @@
 */
 //Root page
 Route::get('/', 'UserController@login');
+
+//Route::post('v1/user/remember-password', 'UserController@remember');
 //Pages for logged users
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 {
@@ -19,6 +21,7 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 	Route::post('user/login', 'UserController@login');
 	Route::post('user/remember-password', 'UserController@remember');
 	Route::post('user/reset-password', 'UserController@reset');
+	Route::get('user/restore/{token?}', 'UserController@restore');
 	
 	//Tags routes
 	Route::post('tags/delete', 'TagController@delete');

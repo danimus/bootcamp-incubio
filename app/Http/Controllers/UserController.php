@@ -11,13 +11,10 @@ use Response;
 use Input;
 use Hash;
 use Illuminate\Database\QueryException as QueryException;
-<<<<<<< HEAD
 use ResetsPasswords;
 use Mail;
 use Password;
 use Illuminate\Auth\Passwords\PasswordBroker;
-=======
->>>>>>> origin/development
 
 class UserController extends Controller {
 
@@ -118,25 +115,35 @@ class UserController extends Controller {
 	public function remember(){
 		$user = User::where('email', '=', Input::get('email'))->first();
 		if($user != null){
-			/*Mail::send('emails.restorePassword', ['user' => $user], function($m) use ($user){
-				$m->to($user->email, $user->name)->subject('Your reminder!');
-			}); */
-
 			Mail::send('emails.restorePassword', ['user' => $user], function($message)
 			{
-				$message->to('ruben.nieto93@gmail.com', 'Ruben Nieto')->subject('Welcome!');
+				$message->to(Input::get('email'))->subject('Restablece tu contraseña');
 			});
 			return response()->api("yes","mail send","");
 		}else{
 			return response()->api("no","mail send failed","");
-		}
+		}		
+	}
 
-		/*Password::remind(Input::only('email'), function($message)
-		{
-		    $message->subject('Password Reminder');
-		  return response()->api("yes","If there is an account associated with the email you will receive an email with a link to reset your password.","");
-		});*/
-				
+	public function reset(){
+		$user = User::where('email', '=', Input::get('email'))->first();
+		if(Input::get('password') == Input::get('password_confirmation')){
+			$user->password = Hash::make(Input::get('password'));
+			try{
+				$user->save();	
+			}
+			catch(QueryException $e){
+				return response()->api("no","Error while saving user","");
+			}
+			return response()->api("yes","Reset password".Input::get('password'),"");	
+		}else{
+			return response()->api("no","Passwords don't match","");	
+		}
+		
+	}
+
+	public function restore(){
+		return View::make('auth/reset');
 	}
 
 	/**
