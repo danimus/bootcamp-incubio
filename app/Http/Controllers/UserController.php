@@ -2,11 +2,15 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
 use View;
 use Redirect;
+use Response;
+use Input;
+use Hash;
+use Illuminate\Database\QueryException as QueryException;
 
 class UserController extends Controller {
 
@@ -17,7 +21,7 @@ class UserController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		return View::make('home');
 	}
 
 	/**
@@ -75,18 +79,33 @@ class UserController extends Controller {
 
 	
 	public function login(){
-		// Verificamos que el usuario no esté autenticado
-        if (Auth::check()){
-            // Si está autenticado lo mandamos a la raíz donde estara el mensaje de bienvenida.
-            return Redirect::to('home');
-        }
-        // Mostramos la vista login.blade.php (Recordemos que .blade.php se omite.)
-        return View::make('auth/login');
+
+		if(Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))){
+
+			return response()->api("yes","Logged in successfully","");
+		}
+		else{
+			return response()->api("no","Auth failed","");
+		}
+
 	}
 
 	public function register(){
 
-		return View::make('auth/register');
+		$user = new User;
+		$user->name =  Input::get('name');
+		$user->email =  Input::get('email');
+		$user->password = Hash::make(Input::get('password'));
+
+		try{
+			$user->save();
+			return response()->api("yes","User created successfully","");
+
+		}
+		catch (QueryException $e) {
+			return response()->api("no","Error while saving user","");
+
+		}
 	}
 
 	public function remember(){
