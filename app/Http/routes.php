@@ -42,6 +42,12 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 
+Route::get('/v1/tags/get-tags-user', 'TagController@getTagsUser');
+
+Route::get('/tags/{id}', 'TagController@show');
+
+Route::get('/v1/tags/add/{tagname}', 'TagController@addNewTag({tagname})');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
