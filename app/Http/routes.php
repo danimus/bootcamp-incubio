@@ -13,7 +13,8 @@
 
 
 //Root page
-Route::get('/', 'UserController@login');
+Route::get('/', 'HomeController@index');
+
 
 //Pages for logged users
 
