@@ -39,4 +39,27 @@ class TagController extends Controller {
 
 	}
 
+	public function delete(Request $request){
+		//Esto ya casi funciona tete
+		//el count da 0 todo el rato, algo pasa por ahi
+        $tagName=$request->input('tagname');
+        $idTag= Tags::where('tagname',$tagName)->get();
+        $count= TagsUser::where('tags_id',$idTag[0]->id)->get()->count();
+        //dd($count);
+
+        if ($count ==0 ){
+
+            return response()->api("no","This hashtag has not been assigned to you","");
+        }else if( $count == 1){
+
+            $tag= Tags::find($idTag[0]->id);
+            $tag-> delete();
+        }else;
+
+        $tagUser= TagsUser::where('tags_id',$idTag[0]->id)->
+                        where('user_id',Auth::user()->id);
+        $tagUser-> delete();
+        return response()->api("yes","Hashtag deleted succesfully","");
+    }
+
 }
