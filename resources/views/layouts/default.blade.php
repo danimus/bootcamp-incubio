@@ -4,21 +4,21 @@
     @include('includes.head')
 </head>
 <body>
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <header class="row">
-        @include('includes.header')
-    </header>
+        <header class="row">
+            @include('includes.header')
+        </header>
 
-    <div id="main">
+        <div id="main">
 
-<ng-view></ng-view>
-     @yield('content')
+            <ng-view></ng-view>
+            <!--@yield('content')-->
 
+        </div>
+        <footer class="row">
+            @include('includes.footer')
+        </footer>
     </div>
-    <footer class="row">
-        @include('includes.footer')
-    </footer>
-</div>
 </body>
 </html>

@@ -1,82 +1,50 @@
 
-angular.module('mediatweet', [ 'ngResource','ngRoute' ]);
+angular.module('mediatweet', [ 'ngResource','ngRoute']);
 
 angular.module('mediatweet').config(function($routeProvider) {
-    $routeProvider
-        .when('/home', {
-            templateUrl: 'templates/home.html',
-            controller: 'StudentController'
-        })
-        .when('/viewStudents', {
-            templateUrl: 'templates/viewStudents.html',
-            controller: 'StudentController'
-        })
-        .otherwise({
-            redirectTo: '/home'
-        });
+	$routeProvider
+	.when('/home', {
+		templateUrl: 'templates/home.html',
+		controller: 'HomeController'
+	})
+	.when('/register', {
+		templateUrl: 'templates/register.html',
+		controller: 'RegisterController'
+	})
+	.when('/login', {
+		templateUrl: 'templates/login.html',
+		controller:'LoginController'
+	})
+    .otherwise({
+            redirectTo: '/login'
+    });
 });
 
-angular.module( 'mediatweet' ).factory(
-	'ItemResource',
-	[
-		'$resource',
-		function ( $resource ) {
+angular.module( 'mediatweet' ).controller('LoginController',function($scope,Login){
+	$scope.loginSubmit = function(){
+		var auth = Login.auth($scope.loginData);
+		console.log($scope.loginData);
+		auth.success(function(response){
+			console.log(response);
+		});
+	}
+});
 
-			var resource = {};
+angular.module( 'mediatweet' ).controller('RegisterController',function($scope,Login){
+	$scope.loginSubmit = function(){
+		var auth = Login.auth($scope.loginData);
+		console.log($scope.loginData);
+		auth.success(function(response){
+			console.log(response);
+		});
+	}
+});
 
-			var item = $resource(  '/item', {}, {
-
-				get : { method : 'GET', isArray : true }
-			} );
-
-			resource.items = [];
-
-			resource.getItems = function() {
-
-				item.get().$promise.then( function( data ){
-
-					angular.copy( data, resource.items );
-
-				} );
-			};
-
-			return resource;
+angular.module('mediatweet').factory('Login',function($http){
+	return{
+		auth:function(credentials){
+			var authUser = $http({method:'POST',url:'api/v1/user/login',params:credentials});
+			return authUser;
 		}
-	]
-);
-
-angular.module( 'mediatweet' ).controller(
-	'MainController',
-	[
-		'$scope',
-		'ItemResource',
-		function ( $scope, ItemResource ) {
-
-			$scope.pulsado = true;
-
-			$scope.fnAlert = function(){
-
-				ItemResource.getItems();
-			};
-
-
-			$scope.items = ItemResource.items;
-
-
-			ItemResource.getItems();
-
-			//$scope.name = "Guillem";
-		}
-	]
-);
-
-angular.module( 'mediatweet' ).controller(
-	'NameController',
-	[
-		'$scope',
-		function ( $scope ) {
-
-			//$scope.name = "Xavier";
-		}
-	]
-);
+	}
+});
