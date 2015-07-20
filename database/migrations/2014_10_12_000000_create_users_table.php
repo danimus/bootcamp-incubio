@@ -18,9 +18,10 @@ class CreateUsersTable extends Migration {
 			$table->string('name');
 			$table->string('email')->unique();
 			$table->string('password', 60);
-			$table->integer('tagid');
 			$table->rememberToken();
 			$table->timestamps();
+			$table->string('user_twitter');
+			$table->boolean('active')->default(0);
 		});
 	}
 

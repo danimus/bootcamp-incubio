@@ -25,7 +25,7 @@ angular.module( 'mediatweet' ).controller('LoginController',function($scope,Logi
 		var auth = Login.auth($scope.loginData);
 		console.log($scope.loginData);
 		auth.success(function(response){
-			console.log(response);
+			console.log(response);			
 		});
 	}
 });
