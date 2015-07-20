@@ -1,0 +1,24 @@
+<div class="col-md-12">
+	<div class="modal-dialog" style="margin-bottom:0">
+		<div class="modal-content">
+			<div class="panel-heading">
+				<h2>Login</h2>
+			</div>
+			<div class="panel-body">
+				<form action="/api/v1/user/login" method="POST"><!--username-->
+					<div class="form-group">
+						<label for="username">Email</label>
+						<input id="email" name="email" type="text" />
+					</div>
+					<!--password-->
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input id="password" name="password" type="password" />
+					</div>
+					<!--submit-->
+					<div class="form-group"><button class="btn btn-primary" type="submit">Login</button></div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

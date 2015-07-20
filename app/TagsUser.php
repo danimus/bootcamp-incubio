@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class tags extends Model {
+class TagsUser extends Model {
 
-	protected $table='tags';
+	protected $table = 'tags_user';
+
 
 }
