@@ -16,7 +16,6 @@ class CreateTagsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('tagname');
-			$table->boolean('isTrendingTopic');
 			$table->timestamps();
 			
 		});

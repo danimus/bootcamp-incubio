@@ -21,6 +21,7 @@ class TagController extends Controller {
 			$contenedorDeTagsName[$i]= $listTagsUser;
 			$i++;
 		}
+		if ($i==0) return response()->api("no","this user has not tags assigned","");
 		return response()->api("yes","",$contenedorDeTagsName);
 
 		
@@ -28,20 +29,33 @@ class TagController extends Controller {
 
 	public function addNewTag(Request $request){
 		$tagname= $request->input('tagname');
-		$tag= new Tags;
-		$tag->tagname=$tagname;
-		$userTagObj=new TagsUser;
-		$userTagObj->user_id=Auth::user()->id;
-		$tag->save();
-		$userTagObj->tags_id=$tag->id;
-		$userTagObj->save();
-		return response()->api("yes","Tag created successfully","");
+		$control= Tags::where('tagname',$tagname)->get();
+		if ($control->count()==0){
+			$tag= new Tags;
+			$tag->tagname=$tagname; 
+			$tag->save();
+			$userTagObj=new TagsUser;
+			$userTagObj->user_id=Auth::user()->id;
+			$userTagObj->tags_id=$tag->id;
+			$userTagObj->save();
+			return response()->api("yes","Tag created successfully","");
+			}
+		else {
+			
+        	$count= TagsUser::where('tags_id',$control[0]->id)->where('user_id',Auth::user()->id)->get()->count();
+        	if ($count==1) return response()->api("no","Tag already exists","");
+
+			$userTagObj=new TagsUser;
+			$userTagObj->user_id=Auth::user()->id;
+			
+			$userTagObj->tags_id=$control[0]->id;
+			$userTagObj->save();
+			return response()->api("yes","Tag created successfully","");
+		}
 
 	}
 
 	public function delete(Request $request){
-		//Esto ya casi funciona tete
-		//el count da 0 todo el rato, algo pasa por ahi
         $tagName=$request->input('tagname');
         $idTag= Tags::where('tagname',$tagName)->get();
         $count= TagsUser::where('tags_id',$idTag[0]->id)->get()->count();
