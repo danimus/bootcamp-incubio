@@ -12,6 +12,9 @@
 //Root page
 Route::get('/', 'HomeController@index');
 
+Route::get('/reset-password', 'HomeController@reset');
+
+
 //Pages for logged users
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 {

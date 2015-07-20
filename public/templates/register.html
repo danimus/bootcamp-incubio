@@ -5,19 +5,31 @@
 				<h2>Register</h2>
 			</div>
 			<div class="panel-body">
-				<form action="/api/v1/user/register" method="POST"><!--username-->
+				<form action="/api/v1/user/register" method="POST">
+					<!--name-->
 					<div class="form-group">
-						<label for="username">Email</label>
-						<input id="email" name="email" type="text" />
+						<label for="name">Name: </label>
+						<input id="name" name="name" type="text" />
+					</div>
+					<!--email-->
+					<div class="form-group">
+						<label for="username">Email: </label>
+						<input id="email" name="email" type="email" />
 					</div>
 					<!--password-->
 					<div class="form-group">
-						<label for="password">Password</label>
+						<label for="password">Password: </label>
 						<input id="password" name="password" type="password" />
 					</div>
+					<!--password again-->
 					<div class="form-group">
-						<label for="name">Twitter username</label>
-						<input id="name" name="name" type="text" />
+						<label for="password2">Password: </label>
+						<input id="password2" name="password2" type="password" />
+					</div>
+					<!--nickname twitter-->
+					<div class="form-group">
+						<label for="username">Twitter username: </label>
+						<input id="username" name="username" type="text" />
 					</div>
 					<!--submit-->
 					<div class="form-group"><button class="btn btn-primary" type="submit">Register</button></div>
