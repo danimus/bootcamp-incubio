@@ -11,36 +11,37 @@
 |
 */
 
-//Default page
-//Route::get('/', 'WelcomeController@index');
 
 //Root page
-Route::get('/', 'UserController@login');
+Route::get('/', 'HomeController@index');
 
-//Pages for logged users
-Route::group(['middleware' => ['auth']], function() {
+
+//Pages for logged userss
+
+Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
+{
 	//User routes
-	Route::get('home', 'HomeController@index');
-    Route::get('v1/user/register', 'UserController@register');
-    Route::get('v1/user/login', 'UserController@login');
-	Route::get('v1/user/remember-password', 'UserController@remember');
-
-	//Api routes
-	Route::get('/v1/api/response', 'ApiController@index');
+	Route::post('user/register', 'UserController@register');
+	Route::post('user/login', 'UserController@login');
+	Route::post('user/remember-password', 'UserController@remember');
 
 	//Tags routes
-	Route::get('/v1/tags/add', 'TagsController@index');
-	Route::get('/v1/tags/delete', 'TagsController@index');
-	Route::get('/v1/tags/modify', 'TagsController@index');
+	Route::post('tags/delete', 'TagController@delete');
+	Route::get('tags/get-tags-user', 'TagController@getTagsUser');
+	Route::post('tags/add', 'TagController@addNewTag');
 
 	//Statistics routes
-	Route::get('/v1/statistics/global-trends', 'StatisticsController@index');
-	Route::get('/v1/statistics/local-trends', 'StatisticsController@index');
-	Route::get('/v1/statistics/user-tags', 'StatisticsController@index');
+	Route::get('statistics/global-trends', 'StatisticsController@index');
+	Route::get('statistics/local-trends', 'StatisticsController@index');
+	Route::get('statistics/user-tags', 'StatisticsController@index');
 
 });
+
+
+Route::get('/tags/{id}', 'TagController@show');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-]);
+	]);

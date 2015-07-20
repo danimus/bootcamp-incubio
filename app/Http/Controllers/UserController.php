@@ -2,11 +2,15 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
 use View;
 use Redirect;
+use Response;
+use Input;
+use Hash;
+use Illuminate\Database\QueryException as QueryException;
 
 class UserController extends Controller {
 
@@ -17,7 +21,7 @@ class UserController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		return View::make('home');
 	}
 
 	/**
@@ -75,6 +79,7 @@ class UserController extends Controller {
 
 	
 
+
 	public function login(){
 		// Verificamos que el usuario no esté autenticado
         if (Auth::check()){
@@ -89,8 +94,20 @@ class UserController extends Controller {
 
 	public function register(){
 
+		$user = new User;
+		$user->name =  Input::get('name');
+		$user->email =  Input::get('email');
+		$user->password = Hash::make(Input::get('password'));
 
-		return View::make('auth/register');
+		try{
+			$user->save();
+			return response()->api("yes","User created successfully","");
+
+		}
+		catch (QueryException $e) {
+			return response()->api("no","Error while saving user","");
+
+		}
 	}
 
 	public function remember(){
