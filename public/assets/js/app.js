@@ -1,7 +1,12 @@
 
-var app = angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
+var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
 
-app.config(function($routeProvider) {
+app.config(['growlProvider', function(growlProvider) {
+    growlProvider.globalTimeToLive(5000);
+    growlProvider.globalPosition('top-right');
+}]);
+
+angular.module('mediatweet').config(function($routeProvider) {
 	$routeProvider
 	.when('/home', {
 		templateUrl: 'templates/home.html',
@@ -11,17 +16,13 @@ app.config(function($routeProvider) {
 		templateUrl: 'templates/register.html',
 		controller: 'RegisterController'
 	})
-	.when('/remember-password', {
+	.when('/remember', {
 		templateUrl: 'templates/remember_password.html',
 		controller: 'RememberPasswordController'
 	})
 	.when('/login', {
 		templateUrl: 'templates/login.html',
 		controller:'LoginController'
-	})
-	.when('/remember', {
-		templateUrl: 'templates/remember_password.html',
-		controller:'RememberController'
 	})
 	.when('/restore', {
 		templateUrl: 'templates/restore_password.html',
@@ -35,29 +36,45 @@ app.config(function($routeProvider) {
 
 /*    controllers     */
 
-app.controller('LoginController',function($scope,Login,$location){
-	$scope.loginSubmit = function(){
-		var auth = Login.auth($scope.loginData);
-		console.log($scope.loginData);
-		auth.success(function(response){
-			console.log(response);
-			$location.path('/register').replace();			
-		});
-	}
+app.controller('HomeController',function(){
+
 });
 
-app.controller('RegisterController',function($scope, $http){
+app.controller('LoginController',['$scope', '$http', 'growl', '$location', '$timeout', function($scope, $http, growl, $location, $timeout){
+	$scope.forgetPassword = function(){
+		$location.path('/remember').replace();
+	}
+	$scope.loginSubmit = function(){
+		$http.post('api/v1/user/login', $scope.user).
+			success(function(data) {
+				$success=data.header.success;
+				$message=data.header.msg;
+				if($success=="yes"){
+					growl.success($message,{title: 'Success message'});
+					$timeout(function(){$location.path('/home').replace();},2000);
+				}else{
+					growl.error($message,{title: 'Error message'});
 
+				}
+		}).
+		error(function(data) {
+			alert(data);
+		});
+	}
+}]);
+
+app.controller('RegisterController',function($scope, $http, growl){
 	$scope.registerSubmit = function (){
-		/*var auth = Login.auth($scope.loginData);
-		console.log($scope.loginData);
-		auth.success(function(response){
-			console.log(response);
-		})*/
-
 		$http.post('api/v1/user/register', $scope.user).
 			success(function(data) {
-				$error_message=data.header.msg
+				$success=data.header.success;
+				$message=data.header.msg;
+				if($success=="yes"){
+					growl.success($message,{title: 'Success message'});
+				}else{
+					growl.error($message,{title: 'Error message'});
+
+				}
 				console.log(data.header.msg);
 		}).
 		error(function(data) {
@@ -66,14 +83,8 @@ app.controller('RegisterController',function($scope, $http){
 	}
 	});
 
-app.controller('RememberPasswordController',function($scope){
-	//
-	}
-);
-
-
 /*   factory    */
-
+/*
 app.factory('Login',function($http){
 	return{
 		auth:function(credentials){
@@ -81,9 +92,9 @@ app.factory('Login',function($http){
 			return authUser;
 		}
 	}
-});
+});*/
 
-app.controller('RememberController',['$scope', '$http', 'growl', function($scope, $http, growl){
+app.controller('RememberPasswordController',['$scope', '$http', 'growl', function($scope, $http, growl){
 	$scope.rememberPassword = function(){
 		$http.post('api/v1/user/remember-password', {email:$scope.email}).
 			success(function(data) {
@@ -92,8 +103,7 @@ app.controller('RememberController',['$scope', '$http', 'growl', function($scope
 				}else if(data.header.success == "no"){
 					growl.error(data.header.msg,{title: 'Error message'});
 				}
-			}).
-			error(function(data) {
+			}).error(function(data) {
 				growl.info('Error connection, please try again',{title: 'Error message'});
 			});
 	}
@@ -115,4 +125,3 @@ app.controller('RestoreController',['$scope', '$http', 'growl', function($scope,
 			});
 	}
 }]);
-

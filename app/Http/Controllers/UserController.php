@@ -93,38 +93,46 @@ class UserController extends Controller {
 	}
 
 	public function register(Request $request){
-		$password= $request->input('password');
-		$password2= $request->input('password2');
 		try{
-			$email= $request->input('email');		
+			$name=$request->input('name');	
 			//required field
-			if(!empty($email)){
-				if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-					//required fields
-					if(!(empty($password) || empty($password2))){
-						if($password==$password2){
-							//minimum password length
-							if(strlen($password)>=6){
-								$user = new User;
-								$user->name =  $request->input('name');
-								$user->email =  $email;
-								$user->password = Hash::make($password);
-								$user->save();
-								return response()->api("yes","User created successfully","");
+			if(!(empty($name))){
+				$email= $request->input('email');
+				//required field
+				if(!empty($email)){
+					//email format
+					if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						$password= $request->input('password');
+						$password2= $request->input('password2');
+						//required fields
+						if(!(empty($password) || empty($password2))){
+							//password match
+							if($password==$password2){
+								//minimum password length
+								if(strlen($password)>=6){
+									$user = new User;
+									$user->name =  $name;
+									$user->email =  $email;
+									$user->password = Hash::make($password);
+									$user->save();
+									return response()->api("yes","User created successfully","");
+								}else{
+									return response()->api("no","Password too short","");
+								}
 							}else{
-								return response()->api("no","Password too short","");
+								return response()->api("no","Passwords don't match","");
 							}
 						}else{
-							return response()->api("no","Passwords don't match","");
+							return response()->api("no","Passwords required","");
 						}
-					}else{
-						return response()->api("no","Passwords required","");
+					}else{								
+						return response()->api("no","Invalid e-mail format","");
 					}
-				}else{								
-					return response()->api("no","Invalid e-mail format","");
+				}else{
+					return response()->api("no","E-mail is required","");
 				}
 			}else{
-				return response()->api("no","E-mail is required","");
+				return response()->api("no","Name is required","");
 			}	
 		}catch (QueryException $e) {
 			return response()->api("no","Error while saving user","");
