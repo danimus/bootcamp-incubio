@@ -25,7 +25,8 @@ angular.module( 'mediatweet' ).controller('LoginController',function($scope,Logi
 		var auth = Login.auth($scope.loginData);
 		console.log($scope.loginData);
 		auth.success(function(response){
-			console.log(response);			
+			console.log(response);	
+			$window.location.href = "http://bootcamp.incubio.com:8085/home"		
 		});
 	}
 });
@@ -36,6 +37,7 @@ angular.module( 'mediatweet' ).controller('RegisterController',function($scope,L
 		console.log($scope.loginData);
 		auth.success(function(response){
 			console.log(response);
+
 		});
 	}
 });

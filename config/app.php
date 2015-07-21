@@ -146,6 +146,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 		'App\Providers\ResponseAPIServiceProvider',
+		 'Tymon\JWTAuth\Providers\JWTAuthServiceProvider'
 
 	],
 
@@ -194,6 +195,8 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+		'JWTAuth'   => 'Tymon\JWTAuth\Facades\JWTAuth::class',
+		'JWTFactory' =>'Tymon\JWTAuth\Facades\JWTFactory::class',
 
 	],
 
