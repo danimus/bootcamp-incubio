@@ -17,8 +17,8 @@ class ResponseAPIServiceProvider extends ServiceProvider {
 				[
 					'header'  => 
 						[
-							'success ' => $success,
-							'msg ' => $message_error,
+							'success' => $success,
+							'msg' => $message_error,
 						],
 					'body' => 
 						[

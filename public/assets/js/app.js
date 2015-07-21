@@ -1,5 +1,5 @@
 
-angular.module('mediatweet', [ 'ngResource','ngRoute']);
+angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
 
 angular.module('mediatweet').config(function($routeProvider) {
 	$routeProvider
@@ -15,6 +15,10 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/login.html',
 		controller:'LoginController'
 	})
+	.when('/remember', {
+		templateUrl: 'templates/remember.html',
+		controller:'RememberController'
+	})
     .otherwise({
             redirectTo: '/login'
     });
@@ -25,7 +29,7 @@ angular.module( 'mediatweet' ).controller('LoginController',function($scope,Logi
 		var auth = Login.auth($scope.loginData);
 		console.log($scope.loginData);
 		auth.success(function(response){
-			console.log(response);
+			console.log(response);			
 		});
 	}
 });
@@ -48,3 +52,20 @@ angular.module('mediatweet').factory('Login',function($http){
 		}
 	}
 });
+
+
+// Recoger peticion API (prueba Ruben)
+angular.module( 'mediatweet' ).controller('RememberController',['$scope', '$http', 'growl', function($scope, $http, growl){
+	$scope.rememberPassword = function(){
+		$http.post('api/v1/user/remember-password', {msg:'hello word!'}).
+			success(function(data) {
+				console.log(data);
+				growl.info(data.header.msg,{title: 'Warning!'});
+			}).
+			error(function(data) {
+				alert(data);
+			});
+		
+	}
+}]);
+
