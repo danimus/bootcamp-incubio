@@ -38,15 +38,49 @@ angular.module( 'mediatweet' ).controller('LoginController',function($scope,Logi
 	}
 });
 
-angular.module( 'mediatweet' ).controller('RegisterController',function($scope,Login){
-	$scope.loginSubmit = function(){
+angular.module( 'mediatweet' ).controller('RegisterController',function($scope, $http){
+	$scope.registerSubmit = function (){
+		/*var auth = Login.auth($scope.loginData);
+		console.log($scope.loginData);
+		auth.success(function(response){
+			console.log(response);
+		})*/
+
+		$http.post('api/v1/user/register', {email: $scope.email}).
+			success(function(data) {
+			console.log(data);
+		}).
+		error(function(data) {
+			alert(data);
+		});
+	}
+	/*$scope.registerSubmit = function(){
 		var auth = Login.auth($scope.loginData);
 		console.log($scope.loginData);
 		auth.success(function(response){
 			console.log(response);
 		});
-	}
-});
+
+	
+  $scope.master = {};
+
+  $scope.update = function(user) {
+    $scope.master = angular.copy(user);
+  };
+
+
+
+  $scope.reset = function(form) {
+    if (form) {
+      form.$setPristine();
+      form.$setUntouched();
+    }
+    $scope.user = angular.copy($scope.master);
+  };
+
+  $scope.reset();
+}
+})*/});
 
 angular.module( 'mediatweet' ).controller('RememberPasswordController',function($scope){
 	//
@@ -64,3 +98,5 @@ angular.module('mediatweet').factory('Login',function($http){
 		}
 	}
 });
+
+

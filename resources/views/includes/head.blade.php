@@ -12,3 +12,4 @@
 <script src="/bower_components/ng-resource/dist/ng-resource.js"></script>
 <script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
 <script src="/assets/js/app.js"></script>
+<script type="text/javascript" src="/assets/js/validation.js"></script>

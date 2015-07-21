@@ -1,35 +1,41 @@
-<div class="col-md-12">
+<div ng-controller="RegisterController" class="col-md-12">
 	<div class="modal-dialog" style="margin-bottom:0">
 		<div class="modal-content">
 			<div class="panel-heading">
 				<h2>Register</h2>
 			</div>
 			<div class="panel-body">
-				<form action="/api/v1/user/register" method="POST">
+				<form ng-submit="registerSubmit()">
 					<!--name-->
 					<div class="form-group">
 						<label for="name">Name: </label>
-						<input id="name" name="name" type="text" />
+						<input ng-model="user.name" id="name" name="name" type="text"/>
+						
 					</div>
 					<!--email-->
 					<div class="form-group">
-						<label for="username">Email: </label>
-						<input id="email" name="email" type="email" />
+						<label for="email">Email: </label>
+						<input ng-model="user.email" id="email" name="email" type="email"/>
+						
 					</div>
+					
 					<!--password-->
 					<div class="form-group">
 						<label for="password">Password: </label>
-						<input id="password" name="password" type="password" />
+						<input ng-model="user.password" id="password" name="password" type="password" />
 					</div>
+
 					<!--password again-->
 					<div class="form-group">
 						<label for="password2">Password: </label>
-						<input id="password2" name="password2" type="password" />
-					</div>
+						<input ng-model="user.password2" id="password2" name="password2" type="password" />
+						
+
 					<!--nickname twitter-->
 					<div class="form-group">
 						<label for="username">Twitter username: </label>
-						<input id="username" name="username" type="text" />
+						
+							<input ng-model="user.username" id="username" name="username" type="text" />
 					</div>
 					<!--submit-->
 					<div class="form-group"><button class="btn btn-primary" type="submit">Register</button></div>

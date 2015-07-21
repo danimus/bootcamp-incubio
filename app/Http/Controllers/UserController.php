@@ -92,7 +92,7 @@ class UserController extends Controller {
 		$password= $request->input('password');
 		$password2= $request->input('password2');
 		try{
-			$email= $request->input('email');
+			$email= $request->input('email');		
 			//required field
 			if(!empty($email)){
 				if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
