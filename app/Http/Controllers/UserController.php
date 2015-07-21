@@ -109,7 +109,34 @@ class UserController extends Controller {
 	}
 
 	public function remember(){
-		return View::make('auth/password');	
+		$user = User::where('email', '=', Input::get('email'))->first();
+		if($user != null){
+			Mail::send('emails.restorePassword', ['user' => $user], function($message)
+			{
+				$message->to(Input::get('email'))->subject('Restablece tu contraseña');
+			});
+			return response()->api("yes","mail send","");
+		}else{
+			return response()->api("no","mail send failed","");
+		}		
+	}
+
+
+	public function reset(){
+		$user = User::where('email', '=', Input::get('email'))->first();
+		if(Input::get('password') == Input::get('password_confirmation')){
+			$user->password = Hash::make(Input::get('password'));
+			try{
+				$user->save();	
+			}
+			catch(QueryException $e){
+				return response()->api("no","Error while saving user","");
+			}
+			return response()->api("yes","Reset password".Input::get('password'),"");	
+		}else{
+			return response()->api("no","Passwords don't match","");	
+		}
+		
 	}
 
 	/**
