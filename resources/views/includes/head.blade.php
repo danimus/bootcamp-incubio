@@ -18,10 +18,5 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-animate.js"></script>
 <script href="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-animate.min.js"></script>
 <script src="/assets/js/app.js"></script>
-<<<<<<< HEAD
 <script type="text/javascript" src="/assets/js/validation.js"></script>
-=======
-
-
 <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js"></script>
->>>>>>> development

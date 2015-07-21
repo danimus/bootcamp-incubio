@@ -6,6 +6,7 @@
 			</div>
 			<div class="panel-body">
 				<form ng-submit="registerSubmit()">
+					<div growl></div>
 					<!--name-->
 					<div class="form-group">
 						<label for="name">Name: </label>
@@ -15,7 +16,7 @@
 					<!--email-->
 					<div class="form-group">
 						<label for="email">Email: </label>
-						<input ng-model="user.email" id="email" name="email" type="email"/>
+						<input ng-model="user.email" id="email" name="email" type="text"/>
 						
 					</div>
 					

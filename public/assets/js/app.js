@@ -1,7 +1,13 @@
 
-angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
+var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
+
+app.config(['growlProvider', function(growlProvider) {
+    growlProvider.globalTimeToLive(5000);
+    growlProvider.globalPosition('top-right');
+}]);
 
 angular.module('mediatweet').config(function($routeProvider) {
+
 	$routeProvider
 	.when('/home', {
 		templateUrl: 'templates/home.html',
@@ -11,18 +17,14 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/register.html',
 		controller: 'RegisterController'
 	})
-	.when('/remember-password', {
+	.when('/remember', {
 		templateUrl: 'templates/remember_password.html',
 		controller: 'RememberPasswordController'
 	})
 	.when('/login', {
 		templateUrl: 'templates/login.html',
 		controller:'LoginController'
-	})
-	.when('/remember', {
-		templateUrl: 'templates/remember.html',
-		controller:'RememberController'
-	})
+	})	
     .otherwise({
             redirectTo: '/login'
     });
@@ -42,18 +44,19 @@ angular.module( 'mediatweet' ).controller('LoginController',function($scope,Logi
 	}
 });
 
-angular.module( 'mediatweet' ).controller('RegisterController',function($scope, $http){
+angular.module( 'mediatweet' ).controller('RegisterController',function($scope, $http, growl){
 
 	$scope.registerSubmit = function (){
-		/*var auth = Login.auth($scope.loginData);
-		console.log($scope.loginData);
-		auth.success(function(response){
-			console.log(response);
-		})*/
-
 		$http.post('api/v1/user/register', $scope.user).
 			success(function(data) {
-				$error_message=data.header.msg
+				$success=data.header.success
+				$message=data.header.msg
+				if($success=="yes"){
+					growl.success($message,{title: 'Success message'});
+				}else{
+					growl.error($message,{title: 'Error message'});
+
+				}
 				console.log(data.header.msg);
 		}).
 		error(function(data) {
@@ -62,10 +65,6 @@ angular.module( 'mediatweet' ).controller('RegisterController',function($scope, 
 	}
 	});
 
-angular.module( 'mediatweet' ).controller('RememberPasswordController',function($scope){
-	//
-	}
-);
 
 
 /*   factory    */
@@ -80,15 +79,15 @@ angular.module('mediatweet').factory('Login',function($http){
 });
 
 
-<<<<<<< HEAD
-=======
+
 // Recoger peticion API (prueba Ruben)
-angular.module( 'mediatweet' ).controller('RememberController',['$scope', '$http', 'growl', function($scope, $http, growl){
+angular.module( 'mediatweet' ).controller('RememberPasswordController',['$scope', '$http', 'growl', 
+	function($scope, $http, growl){
 	$scope.rememberPassword = function(){
-		$http.post('api/v1/user/remember-password', {msg:'hello word!'}).
+		$http.post('api/v1/user/remember-password', $scope.email).
 			success(function(data) {
 				console.log(data);
-				growl.info(data.header.msg,{title: 'Warning!'});
+				growl.error(data.header.msg,{title: 'Error message'});
 			}).
 			error(function(data) {
 				alert(data);
@@ -96,5 +95,3 @@ angular.module( 'mediatweet' ).controller('RememberController',['$scope', '$http
 		
 	}
 }]);
-
->>>>>>> development
