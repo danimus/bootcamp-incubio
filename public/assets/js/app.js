@@ -2,7 +2,7 @@
 var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
 
 app.config(['growlProvider', function(growlProvider) {
-    growlProvider.globalTimeToLive(5000);
+    growlProvider.globalTimeToLive(2000);
     growlProvider.globalPosition('top-right');
 }]);
 
@@ -63,7 +63,7 @@ app.controller('LoginController',['$scope', '$http', 'growl', '$location', '$tim
 	}
 }]);
 
-app.controller('RegisterController',function($scope, $http, growl){
+app.controller('RegisterController',function($scope, $http, growl,$location,$timeout){
 	$scope.registerSubmit = function (){
 		$http.post('api/v1/user/register', $scope.user).
 			success(function(data) {
@@ -71,6 +71,7 @@ app.controller('RegisterController',function($scope, $http, growl){
 				$message=data.header.msg;
 				if($success=="yes"){
 					growl.success($message,{title: 'Success message'});
+					$timeout(function(){$location.path('/login').replace();},2000);	
 				}else{
 					growl.error($message,{title: 'Error message'});
 
