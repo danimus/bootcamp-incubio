@@ -1,5 +1,5 @@
 
-angular.module('mediatweet', [ 'ngResource','ngRoute']);
+angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
 
 angular.module('mediatweet').config(function($routeProvider) {
 	$routeProvider
@@ -18,6 +18,10 @@ angular.module('mediatweet').config(function($routeProvider) {
 	.when('/login', {
 		templateUrl: 'templates/login.html',
 		controller:'LoginController'
+	})
+	.when('/remember', {
+		templateUrl: 'templates/remember.html',
+		controller:'RememberController'
 	})
     .otherwise({
             redirectTo: '/login'
@@ -76,3 +80,21 @@ angular.module('mediatweet').factory('Login',function($http){
 });
 
 
+<<<<<<< HEAD
+=======
+// Recoger peticion API (prueba Ruben)
+angular.module( 'mediatweet' ).controller('RememberController',['$scope', '$http', 'growl', function($scope, $http, growl){
+	$scope.rememberPassword = function(){
+		$http.post('api/v1/user/remember-password', {msg:'hello word!'}).
+			success(function(data) {
+				console.log(data);
+				growl.info(data.header.msg,{title: 'Warning!'});
+			}).
+			error(function(data) {
+				alert(data);
+			});
+		
+	}
+}]);
+
+>>>>>>> development
