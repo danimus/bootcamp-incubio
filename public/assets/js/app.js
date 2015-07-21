@@ -23,6 +23,10 @@ app.config(function($routeProvider) {
 		templateUrl: 'templates/remember_password.html',
 		controller:'RememberController'
 	})
+	.when('/restore', {
+		templateUrl: 'templates/restore_password.html',
+		controller:'RestoreController'
+	})
     .otherwise({
             redirectTo: '/login'
     });
@@ -82,6 +86,23 @@ app.factory('Login',function($http){
 app.controller('RememberController',['$scope', '$http', 'growl', function($scope, $http, growl){
 	$scope.rememberPassword = function(){
 		$http.post('api/v1/user/remember-password', {email:$scope.email}).
+			success(function(data) {
+				if(data.header.success == "yes"){
+					growl.success(data.header.msg,{title: 'Success message!'});
+				}else if(data.header.success == "no"){
+					growl.error(data.header.msg,{title: 'Error message'});
+				}
+			}).
+			error(function(data) {
+				growl.info('Error connection, please try again',{title: 'Error message'});
+			});
+	}
+}]);
+
+
+app.controller('RestoreController',['$scope', '$http', 'growl', function($scope, $http, growl){
+	$scope.rememberPassword = function(){
+		$http.post('api/v1/user/reset-password', {password:$scope.password, confirmPassword: $scope.confirmPassword}).
 			success(function(data) {
 				if(data.header.success == "yes"){
 					growl.success(data.header.msg,{title: 'Success message!'});
