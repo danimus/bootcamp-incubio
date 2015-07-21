@@ -125,6 +125,10 @@ class UserController extends Controller {
 		}		
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9479de3079c78b157758f6d7c1dd11e13ab4595d
 	public function reset(){
 		$user = User::where('email', '=', Input::get('email'))->first();
 		if(Input::get('password') == Input::get('password_confirmation')){
@@ -140,10 +144,13 @@ class UserController extends Controller {
 			return response()->api("no","Passwords don't match","");	
 		}
 		
+<<<<<<< HEAD
 	}
 
 	public function restore(){
 		return View::make('auth/reset');
+=======
+>>>>>>> 9479de3079c78b157758f6d7c1dd11e13ab4595d
 	}
 
 	/**
