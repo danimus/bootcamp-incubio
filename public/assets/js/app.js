@@ -55,16 +55,17 @@ angular.module('mediatweet').factory('Login',function($http){
 
 
 // Recoger peticion API (prueba Ruben)
-angular.module( 'mediatweet' ).controller('RememberController',['$scope', 'growl', function($scope,$http,growl){
+angular.module( 'mediatweet' ).controller('RememberController',['$scope', '$http', 'growl', function($scope, $http, growl){
 	$scope.rememberPassword = function(){
-		/*$http.post('api/v1/user/remember-password', {msg:'hello word!'}).
+		$http.post('api/v1/user/remember-password', {msg:'hello word!'}).
 			success(function(data) {
 				console.log(data);
+				growl.info(data.header.msg,{title: 'Warning!'});
 			}).
 			error(function(data) {
 				alert(data);
-			});*/
-		growl.error('This is a warning mesage.',{title: 'Warning!'});
+			});
+		
 	}
 }]);
 
