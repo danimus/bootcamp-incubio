@@ -92,6 +92,14 @@ class UserController extends Controller {
 		}
 	}
 
+	private function saveUser($name, $email, $password){
+		$user = new User;
+		$user->name =  $name;
+		$user->email =  $email;
+		$user->password = Hash::make($password);
+		$user->save();
+	}
+
 	public function register(Request $request){
 		try{
 			$name=$request->input('name');	
@@ -110,33 +118,39 @@ class UserController extends Controller {
 							if($password==$password2){
 								//minimum password length
 								if(strlen($password)>=6){
-									$user = new User;
-									$user->name =  $name;
-									$user->email =  $email;
-									$user->password = Hash::make($password);
-									$user->save();
-									return response()->api("yes","User created successfully","");
+									$this->saveUser($name,$email,$password);
+									$success="yes";
+									$msg="User created successfully";
 								}else{
-									return response()->api("no","Password too short, minimum 6 characters","");
+									$success="no";
+									$msg="Password too short, minimum 6 characters";
 								}
 							}else{
-								return response()->api("no","Passwords don't match","");
+								$success="no";
+								$msg="Passwords don't match";	
 							}
 						}else{
-							return response()->api("no","Passwords required","");
-						}
-					}else{								
-						return response()->api("no","Invalid e-mail format","");
-					}
+							$success="no";
+							$msg="Passwords required";
+						}							
+					}else{			
+						$success="no";
+						$msg="Invalid e-mail format";		
+					}				
 				}else{
-					return response()->api("no","E-mail is required","");
-				}
+					$success="no";
+					$msg="E-mail is required";
+				}	
 			}else{
-				return response()->api("no","Name is required","");
-			}	
+				$success="no";
+				$msg="Name is required";	
+			}
+
 		}catch (QueryException $e) {
-			return response()->api("no","Error while saving user","");
+			$success="no";
+			$msg="Error while saving user";
 		}
+		return response()->api($success,$msg,"");
 	}
 
 	public function remember(){
