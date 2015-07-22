@@ -22,6 +22,7 @@ class TagController extends Controller {
 			$i++;
 		}
 		if ($i==0) return response()->api("no","this user has not tags assigned","");
+
 		return response()->api("yes","",$contenedorDeTagsName);
 
 		
