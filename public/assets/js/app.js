@@ -40,7 +40,7 @@ app.controller('HomeController',function(){
 
 });
 
-app.controller('LoginController',['$scope', '$http', 'growl', '$location', '$timeout', function($scope, $http, growl, $location, $timeout){
+app.controller('LoginController',['$scope', '$http', 'growl', '$location', function($scope, $http, growl, $location){
 	$scope.forgetPassword = function(){
 		$location.path('/remember').replace();
 	}
@@ -50,12 +50,16 @@ app.controller('LoginController',['$scope', '$http', 'growl', '$location', '$tim
 				$success=data.header.success;
 				$message=data.header.msg;
 				if($success=="yes"){
-					growl.success($message,{title: 'Success message'});
-					$timeout(function(){$location.path('/home').replace();},3000);
+					growl.success($message,{
+						title:'Success message',onclose: function(){ 
+							$location.path('/home').replace();
+						}
+					});
 				}else{
 					growl.error($message,{title: 'Error message'});
 
 				}
+
 		}).
 		error(function(data) {
 			alert(data);
@@ -63,15 +67,18 @@ app.controller('LoginController',['$scope', '$http', 'growl', '$location', '$tim
 	}
 }]);
 
-app.controller('RegisterController',function($scope, $http, growl,$location,$timeout){
+app.controller('RegisterController',function($scope, $http, growl,$location){
 	$scope.registerSubmit = function (){
 		$http.post('api/v1/user/register', $scope.user).
 			success(function(data) {
 				$success=data.header.success;
 				$message=data.header.msg;
 				if($success=="yes"){
-					growl.success($message,{title: 'Success message'});
-					$timeout(function(){$location.path('/login').replace();},3000);	
+					growl.success($message,{title: 'Success message',
+						onclose: function(){ 
+							$location.path('/home').replace();
+						}
+					});
 				}else{
 					growl.error($message,{title: 'Error message'});
 
@@ -84,23 +91,12 @@ app.controller('RegisterController',function($scope, $http, growl,$location,$tim
 	}
 	});
 
-/*   factory    */
-/*
-app.factory('Login',function($http){
-	return{
-		auth:function(credentials){
-			var authUser = $http({method:'POST',url:'api/v1/user/login',params:credentials});
-			return authUser;
-		}
-	}
-});*/
-
 app.controller('RememberPasswordController',['$scope', '$http', 'growl', function($scope, $http, growl){
 	$scope.rememberPassword = function(){
 		$http.post('api/v1/user/remember-password', {email:$scope.email}).
 			success(function(data) {
 				if(data.header.success == "yes"){
-					growl.success(data.header.msg,{title: 'Success message!'});
+					growl.success(data.header.msg,{title: 'Success message'});
 				}else if(data.header.success == "no"){
 					growl.error(data.header.msg,{title: 'Error message'});
 				}
