@@ -113,7 +113,7 @@ class UserController extends Controller {
 									$user->save();
 									return response()->api("yes","User created successfully","");
 								}else{
-									return response()->api("no","Password too short","");
+									return response()->api("no","Password too short, minimum 6 characters","");
 								}
 							}else{
 								return response()->api("no","Passwords don't match","");
