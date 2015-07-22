@@ -35,4 +35,10 @@ class HomeController extends Controller {
 		return View::make('pages.home');
 	}
 
+		public function reset()
+	{	
+
+		return View::make('pages.reset');
+	}
+
 }

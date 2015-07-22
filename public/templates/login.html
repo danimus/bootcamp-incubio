@@ -4,21 +4,25 @@
 			<div class="panel-heading">
 				<h2>Login</h2>
 			</div>
-			<div class="panel-body">
-				<form action="/api/v1/user/login" method="POST"><!--username-->
+			<div growl></div>
+				<div class="panel-body">
+				<form ng-submit="loginSubmit()"><!--username-->
 					<div class="form-group">
 						<label for="username">Email</label>
-						<input id="email" name="email" type="text" />
+						<input id="email" name="email" type="text" ng-model="user.email" />
 					</div>
 					<!--password-->
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input id="password" name="password" type="password" />
+						<input id="password" name="password" type="password" ng-model="user.password"/>
+					</div>
+					<div>
+						<a href="" ng-click="forgetPassword()"><p>Have you forget your password?</p></a>
 					</div>
 					<!--submit-->
 					<div class="form-group"><button class="btn btn-primary" type="submit">Login</button></div>
 				</form>
-			</div>
+			</div>			
 		</div>
 	</div>
 </div>

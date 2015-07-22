@@ -145,8 +145,7 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
-		'App\Providers\ResponseAPIServiceProvider',
-
+		'App\Providers\ResponseAPIServiceProvider'
 	],
 
 	/*
