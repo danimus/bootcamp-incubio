@@ -28,6 +28,10 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/restore_password.html',
 		controller:'RestoreController'
 	})
+	.when('/dashboard', {
+		templateUrl: 'templates/dashboard.html',
+		controller:'DashboardController'
+	})
     .otherwise({
             redirectTo: '/login'
     });
@@ -52,7 +56,7 @@ app.controller('LoginController',['$scope', '$http', 'growl', '$location', funct
 				if($success=="yes"){
 					growl.success($message,{
 						title:'Success message',onclose: function(){ 
-							$location.path('/home').replace();
+							$location.path('/dashboard').replace();
 						}
 					});
 				}else{
@@ -123,3 +127,7 @@ app.controller('RestoreController',['$scope', '$http', 'growl', function($scope,
 			});
 	}
 }]);
+
+/*app.controller('',,['$scope', 'growl', function($scope, growl){
+
+}]);*/
