@@ -139,7 +139,8 @@ class UserController extends Controller {
 		}
 	}
 
-	public function remember(){
+	public function remember(Request $request){
+		//$email = $request->input('email');
 		$user = User::where('email', '=', Input::get('email'))->first();
 		if($user != null){
 			Mail::send('emails.restorePassword', ['user' => $user], function($message)
@@ -183,4 +184,34 @@ class UserController extends Controller {
 		//
 	}
 
+	public function loginTwitter(){
+		$oauth_token = Input::get('oauth_token');
+		$oauth_verifier = Input::get('oauth_verifier');
+    	// get service
+		$twit = OAuth::consumer('Twitter');
+
+    	// check if code is valid
+
+    	// if code is provided get user data and sign in
+		if (!empty($oauth_token)) {
+
+        	// This was a callback request from google, get the token
+			$token = $twit->requestAccessToken($oauth_token, $oauth_verifier);
+
+        	// Send a request with it
+			$result = json_decode( $twit->request( 'account/verify_credentials.json' ), true );
+
+			echo print_r($result);
+
+		}
+    	// if not ask for permission first
+		else {
+        	// get authorization
+			$token = $twit->requestRequestToken();
+			$url = $twit->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
+
+        	// return to login url
+			return Response::make()->header( 'Location', (string)$url );
+		}
+	}
 }

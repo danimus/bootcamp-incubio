@@ -104,6 +104,7 @@ app.controller('RememberPasswordController',['$scope', '$http', 'growl', functio
 				}else if(data.header.success == "no"){
 					growl.error(data.header.msg,{title: 'Error message'});
 				}
+				growl.error(data.header.msg,{title: 'Error message'});
 			}).error(function(data) {
 				growl.info('Error connection, please try again',{title: 'Error message'});
 			});
