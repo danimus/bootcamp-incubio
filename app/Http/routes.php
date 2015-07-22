@@ -13,6 +13,9 @@
 Route::get('/', 'HomeController@index');
 
 
+Route::get('/reset-password', 'HomeController@reset');
+
+
 //Pages for logged users
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 {
@@ -20,7 +23,10 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 	//User routes
 	Route::post('user/register', 'UserController@register');
 	Route::post('user/login', 'UserController@login');
-	Route::post('/user/remember-password', 'Auth\PasswordController@postEmail');
+	Route::post('user/remember-password', 'UserController@remember');
+	Route::post('user/reset-password', 'UserController@reset');
+	Route::get('user/restore/{token?}', 'UserController@restore');
+	
 	//Tags routes
 	Route::post('tags/delete', 'TagController@delete');
 	Route::get('tags/get-tags-user', 'TagController@getTagsUser');
@@ -31,6 +37,13 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 	Route::get('statistics/user-tags', 'StatisticsController@index');
 });
 
+Route::get('/tags/{id}', 'TagController@show');
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+	]);
+
+
 Route::get('/mongo', 'ItemController@create');
 
 Route::get('/tags/{id}', 'TagController@show');
@@ -39,3 +52,4 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
