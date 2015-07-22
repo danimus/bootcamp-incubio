@@ -120,3 +120,8 @@ app.controller('RestoreController',['$scope', '$http', 'growl', function($scope,
 			});
 	}
 }]);
+
+app.controller('HomeController',['$scope', '$http', 'growl', '$location', function($scope, $http, growl, $location){
+
+
+}]);

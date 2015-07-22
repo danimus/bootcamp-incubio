@@ -22,7 +22,7 @@
 
 
                     <ng-view></ng-view>
-                    @yield('content')
+
 
             </div>
         </div>
