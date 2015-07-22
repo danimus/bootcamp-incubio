@@ -7,14 +7,13 @@
     <div class="container-fluid">
 
         <header class="row">
-<!--
-            @ if (Auth::check())
-                @ include('includes.header2')
-            @ else
-                @ include('includes.header_admin')
-            @ endif
--->
-            @include('includes.header_admin')
+
+            @if(Auth::check())
+                @include('includes.header_admin')
+            @else
+                @include('includes.header2')
+            @endif
+
         </header>
 
         <!-- #page-wrapper -->
