@@ -7,9 +7,9 @@
         <h2>Reestablecer la contraseña</h2>
 
         <div>
-            Puedes reestablecer tu contraseña con la siguiente dirección, también puedes copiarla y pegarla en la barra de dirección de tu navegador.
+            Puedes confirmar tu mail a través de esta dirrección:
 
-            {{ URL::to('/#/restore/?token=' .$token) }}.<br/>
+            {{ URL::to('#/user-confirmation/?token=' .$token) }}.<br/>
 
             Equipo MediaTweet.
 

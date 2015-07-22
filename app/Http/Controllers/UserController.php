@@ -15,6 +15,7 @@ use ResetsPasswords;
 use Mail;
 use Password;
 use Illuminate\Auth\Passwords\PasswordBroker;
+use Log;
 
 class UserController extends Controller {
 
@@ -110,10 +111,18 @@ class UserController extends Controller {
 							if($password==$password2){
 								//minimum password length
 								if(strlen($password)>=6){
+
+									$token  = UserController::getToken(12);
+
 									$user = new User;
 									$user->name =  $name;
 									$user->email =  $email;
-									$user->password = Hash::make($password);
+									$user ->token = $token;
+									var_dump($user->token);
+									Mail::send('emails.confirmation', array('user' => $user, 'token' => $token), function($message) use ($user)
+										{
+										  $message->to($user->email)->subject('Confirmar Mail');
+										});
 									$user->save();
 									return response()->api("yes","User created successfully","");
 								}else{
@@ -135,14 +144,19 @@ class UserController extends Controller {
 				return response()->api("no","Name is required","");
 			}	
 		}catch (QueryException $e) {
-			return response()->api("no","Error while saving user","");
+			return response()->api("no","error while saving","");
+
 		}
 	}
 
+
 	public function remember(){
 		$user = User::where('email', '=', Input::get('email'))->first();
+		$token = UserController::getToken(12);
+		$user -> token = $token;
+		$user -> save(); 
 		if($user != null){
-			Mail::send('emails.restorePassword', ['user' => $user], function($message)
+			Mail::send('emails.restorePassword', array('user' => $user, 'token' => $token ), function($message)
 			{
 				$message->to(Input::get('email'))->subject('Restablece tu contraseña');
 			});
@@ -152,24 +166,29 @@ class UserController extends Controller {
 		}		
 	}
 
-	public function reset(){
-		$user = User::where('email', '=', Input::get('email'))->first();
-		if(Input::get('password') == Input::get('password_confirmation')){
+	public function reset(Request $request){
+		$token = $request -> input('token');
+		$user = User::where('token', '=', Input::get('token'))->first();
+		if ($user == null) return response() -> api('no', 'Password recovery progress error', "");
+		else if($request -> input('password') == $request -> input('passwordconfirmation')){
 			$user->password = Hash::make(Input::get('password'));
+			$user->token = '0';
 			try{
 				$user->save();	
+
 			}
 			catch(QueryException $e){
 				return response()->api("no","Error while saving user","");
 			}
-			return response()->api("yes","Reset password".Input::get('password'),"");	
+			return response()->api("yes","Reset password",Input::get('password'));	
 		}else{
 			return response()->api("no","Passwords don't match","");	
 		}
 	}
 
-	public function restore(){
-		return View::make('auth/reset');
+	public function restore($token){
+
+		return View::make('auth/reset')->with('token',$token);
 	}
 
 	/**
@@ -181,6 +200,47 @@ class UserController extends Controller {
 	public function destroy($id)
 	{
 		//
+	}
+
+	private function crypto_rand_secure($min, $max) {
+        $range = $max - $min;
+        if ($range < 0) return $min; // not so random...
+        $log = log($range, 2);
+        $bytes = (int) ($log / 8) + 1; // length in bytes
+        $bits = (int) $log + 1; // length in bits
+        $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+        do {
+            $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
+            $rnd = $rnd & $filter; // discard irrelevant bits
+        } while ($rnd >= $range);
+        return $min + $rnd;
+	}
+
+	public function getToken($length){
+	    $token = "";
+	    $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+	    $codeAlphabet.= "0123456789";
+	    for($i=0;$i<$length;$i++){
+	        $token .= $codeAlphabet[UserController::crypto_rand_secure(0,strlen($codeAlphabet))];
+	    }
+	    return $token;
+	}
+
+
+	public function confirmate(Request $request) {
+
+		$token = $request -> input('token');
+		$user = User::where('token','=',$token)-> first();
+
+		if ($user != null) {
+			$user-> token = '0';
+			$user -> confirmed = '1';
+			$user -> save();
+			return response() -> api("yes", "successfully confirmed", "");
+		}
+		else return response() -> api("no", "problems with confirmation progress","");
+			
 	}
 
 }

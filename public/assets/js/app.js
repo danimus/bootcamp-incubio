@@ -28,6 +28,10 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/restore_password.html',
 		controller:'RestoreController'
 	})
+	.when('/user-confirmation', {
+		templateUrl: 'templates/confirmation.html',
+		controller:'ConfirmationController'
+	})
     .otherwise({
             redirectTo: '/login'
     });
@@ -37,8 +41,28 @@ angular.module('mediatweet').config(function($routeProvider) {
 /*    controllers     */
 
 app.controller('HomeController',function(){
-
+	
 });
+
+app.controller('ConfirmationController',['$scope','$http', 'growl', '$routeParams','$location' , function($scope, $http, growl,$routeParams,$location){
+	/*$scope.confirmationUser = function(){
+		$http.post('api/v1/user/confirmateemail/', {token:$routeParams.token}).
+			success(function(data) {
+				if(data.header.success == "yes"){
+					growl.success(data.header.msg,{title: 'Success message',
+						onclose: function(){ 
+							$location.path('/login').replace();
+						}
+					});
+
+				}else if(data.header.success == "no"){
+					growl.error(data.header.msg,{title: 'Error message'});
+				}
+			}).error(function(data) {
+				growl.info('Error connection, please try again',{title: 'Error message'});
+			});
+	}*/
+}]);
 
 app.controller('LoginController',['$scope', '$http', 'growl', '$location', function($scope, $http, growl, $location){
 	$scope.forgetPassword = function(){
@@ -74,7 +98,7 @@ app.controller('RegisterController',function($scope, $http, growl,$location){
 				if($success=="yes"){
 					growl.success($message,{title: 'Success message',
 						onclose: function(){ 
-							$location.path('/home').replace();
+							$location.path('/login').replace();
 						}
 					});
 				}else{
@@ -82,8 +106,7 @@ app.controller('RegisterController',function($scope, $http, growl,$location){
 
 				}
 				console.log(data.header.msg);
-		}).
-		error(function(data) {
+		}).error(function(data) {
 			alert(data);
 		});
 	}
@@ -105,17 +128,21 @@ app.controller('RememberPasswordController',['$scope', '$http', 'growl', functio
 }]);
 
 
-app.controller('RestoreController',['$scope', '$http', 'growl', function($scope, $http, growl){
-	$scope.rememberPassword = function(){
-		$http.post('api/v1/user/reset-password', {password:$scope.password, confirmPassword: $scope.confirmPassword}).
+app.controller('RestoreController',['$scope','$http', 'growl', '$routeParams','$location' , function($scope, $http, growl,$routeParams,$location){
+	$scope.resetSumit = function(){
+		$http.post('api/v1/user/reset-password', {token:$routeParams.token,password:$scope.password,passwordconfirmation:$scope.confirmPassword}).
 			success(function(data) {
 				if(data.header.success == "yes"){
-					growl.success(data.header.msg,{title: 'Success message!'});
+					growl.success(data.header.msg,{title: 'Success message',
+						onclose: function(){ 
+							$location.path('/login').replace();
+						}
+					});
+
 				}else if(data.header.success == "no"){
 					growl.error(data.header.msg,{title: 'Error message'});
 				}
-			}).
-			error(function(data) {
+			}).error(function(data) {
 				growl.info('Error connection, please try again',{title: 'Error message'});
 			});
 	}
