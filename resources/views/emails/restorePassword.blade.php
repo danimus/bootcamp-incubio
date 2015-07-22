@@ -9,7 +9,7 @@
         <div>
             Puedes reestablecer tu contraseña con la siguiente dirección, también puedes copiarla y pegarla en la barra de dirección de tu navegador.
 
-            {{ URL::to('api/v1/user/restore/' . csrf_token()) }}.<br/>
+            {{ URL::to('/remember-password/' . $token) }}.<br/>
 
             Equipo MediaTweet.
 

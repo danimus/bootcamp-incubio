@@ -2,7 +2,7 @@
 var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
 
 app.config(['growlProvider', function(growlProvider) {
-    growlProvider.globalTimeToLive(2000);
+    growlProvider.globalTimeToLive(3000);
     growlProvider.globalPosition('top-right');
 }]);
 
@@ -51,7 +51,7 @@ app.controller('LoginController',['$scope', '$http', 'growl', '$location', '$tim
 				$message=data.header.msg;
 				if($success=="yes"){
 					growl.success($message,{title: 'Success message'});
-					$timeout(function(){$location.path('/home').replace();},2000);
+					$timeout(function(){$location.path('/home').replace();},3000);
 				}else{
 					growl.error($message,{title: 'Error message'});
 
@@ -71,7 +71,7 @@ app.controller('RegisterController',function($scope, $http, growl,$location,$tim
 				$message=data.header.msg;
 				if($success=="yes"){
 					growl.success($message,{title: 'Success message'});
-					$timeout(function(){$location.path('/login').replace();},2000);	
+					$timeout(function(){$location.path('/login').replace();},3000);	
 				}else{
 					growl.error($message,{title: 'Error message'});
 
