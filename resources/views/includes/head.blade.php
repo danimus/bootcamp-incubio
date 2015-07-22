@@ -15,8 +15,8 @@
 <script src="/assets/js/bootstrap.min.js"></script>
 <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <link href="/assets/css/angular-growl.min.css" rel="stylesheet" media="screen"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="/assets/css/yeti.css">
+
+<!--tags-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.0.0/ng-tags-input.css
 ">
 <link rel="stylesheet" href="http://mbenford.github.io/ngTagsInput/css/ng-tags-input.min.css" />
@@ -24,6 +24,8 @@
 <script src="http://mbenford.github.io/ngTagsInput/js/ng-tags-input.min.js"></script>
 <script src="/bower_components/ng-resource/dist/ng-resource.js"></script>
 <script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
+
+<!--growl-->
 <script src="/assets/js/angular-growl.min.js"></script> 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-animate.js"></script>
 <script href="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-animate.min.js"></script>
