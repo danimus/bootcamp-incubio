@@ -1,6 +1,8 @@
+
+
 @extends('layouts.default')
 @section('content')
-
+		<!--
 		<div class="col-md-12">
 
 			<div class="jumbotron">
@@ -14,5 +16,5 @@
 					<a class="btn btn-primary btn-large" href="#">Learn more</a>
 				</p>
 			</div>
-		</div>
+		</div>-->
 @stop

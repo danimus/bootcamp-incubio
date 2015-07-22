@@ -1,12 +1,22 @@
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="description" content="">
 <meta name="author" content="Scotch">
 
 <title>MediaTweet</title>
 
 <!-- load bootstrap from a cdn -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="/assets/css/yeti.css">
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<!-- Custom CSS for bootstrap-->
+<link href="/assets/css/sb-admin.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script src="/assets/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+
+
 <link href="/assets/css/angular-growl.min.css" rel="stylesheet" media="screen"/>
 
 

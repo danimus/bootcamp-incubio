@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="mediatweet">
+<html lang="es" ng-app="mediatweet">
 <head>
     @include('includes.head')
 </head>
@@ -7,15 +7,28 @@
     <div class="container-fluid">
 
         <header class="row">
-            @include('includes.header')
+<!--
+            @ if (Auth::check())
+                @ include('includes.header2')
+            @ else
+                @ include('includes.header_admin')
+            @ endif
+-->
+            @include('includes.header_admin')
         </header>
 
-        <div id="main">
+        <!-- #page-wrapper -->
+        <div id="page-wrapper">
+            <div id="page-content">
 
-            <ng-view></ng-view>
-            <!--@yield('content')-->
 
+                    <ng-view></ng-view>
+                    @yield('content')
+
+            </div>
         </div>
+        <!-- /#page-wrapper -->
+
         <footer class="row">
             @include('includes.footer')
         </footer>
