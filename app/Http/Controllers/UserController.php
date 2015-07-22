@@ -11,6 +11,10 @@ use Response;
 use Input;
 use Hash;
 use Illuminate\Database\QueryException as QueryException;
+use ResetsPasswords;
+use Mail;
+use Password;
+use Illuminate\Auth\Passwords\PasswordBroker;
 
 class UserController extends Controller {
 
@@ -81,31 +85,72 @@ class UserController extends Controller {
 	public function login(){
 
 		if(Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))){
-
 			return response()->api("yes","Logged in successfully","");
 		}
 		else{
 			return response()->api("no","Auth failed","");
 		}
-
 	}
 
-	public function register(){
-
+	private function saveUser($name, $email, $password){
 		$user = new User;
-		$user->name =  Input::get('name');
-		$user->email =  Input::get('email');
-		$user->password = Hash::make(Input::get('password'));
+		$user->name =  $name;
+		$user->email =  $email;
+		$user->password = Hash::make($password);
+		$user->save();
+	}
 
+	public function register(Request $request){
 		try{
-			$user->save();
-			return response()->api("yes","User created successfully","");
+			$name=$request->input('name');	
+			//required field
+			if(!(empty($name))){
+				$email= $request->input('email');
+				//required field
+				if(!empty($email)){
+					//email format
+					if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+						$password= $request->input('password');
+						$password2= $request->input('password2');
+						//required fields
+						if(!(empty($password) || empty($password2))){
+							//password match
+							if($password==$password2){
+								//minimum password length
+								if(strlen($password)>=6){
+									$this->saveUser($name,$email,$password);
+									$success="yes";
+									$msg="User created successfully";
+								}else{
+									$success="no";
+									$msg="Password too short, minimum 6 characters";
+								}
+							}else{
+								$success="no";
+								$msg="Passwords don't match";	
+							}
+						}else{
+							$success="no";
+							$msg="Passwords required";
+						}							
+					}else{			
+						$success="no";
+						$msg="Invalid e-mail format";		
+					}				
+				}else{
+					$success="no";
+					$msg="E-mail is required";
+				}	
+			}else{
+				$success="no";
+				$msg="Name is required";	
+			}
 
+		}catch (QueryException $e) {
+			$success="no";
+			$msg="Error while saving user";
 		}
-		catch (QueryException $e) {
-			return response()->api("no","Error while saving user","");
-
-		}
+		return response()->api($success,$msg,"");
 	}
 
 	public function remember(){
@@ -115,12 +160,11 @@ class UserController extends Controller {
 			{
 				$message->to(Input::get('email'))->subject('Restablece tu contraseña');
 			});
-			return response()->api("yes","mail send","");
+			return response()->api("yes","Mail send, please check your mailbox","");
 		}else{
-			return response()->api("no","mail send failed","");
+			return response()->api("no","Mail do not send, please try again","");
 		}		
 	}
-
 
 	public function reset(){
 		$user = User::where('email', '=', Input::get('email'))->first();
@@ -136,7 +180,10 @@ class UserController extends Controller {
 		}else{
 			return response()->api("no","Passwords don't match","");	
 		}
-		
+	}
+
+	public function restore(){
+		return View::make('auth/reset');
 	}
 
 	/**
