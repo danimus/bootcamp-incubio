@@ -30,8 +30,8 @@ angular.module( 'mediatweet' ).controller('LoginController',function($scope,Logi
 		console.log($scope.loginData);
 		auth.success(function(response){
 			console.log(response);	
-			$window.location.href = "http://bootcamp.incubio.com:8085/home"		
 		});
+		$window.location.href = "http://bootcamp.incubio.com:8085/home"	;	
 	}
 });
 

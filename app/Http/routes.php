@@ -12,13 +12,15 @@
 //Root page
 Route::get('/', 'HomeController@index');
 
+
 //Pages for logged users
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 {
+	Route::get('/home', 'HomeController@index');
 	//User routes
 	Route::post('user/register', 'UserController@register');
 	Route::post('user/login', 'UserController@login');
-	Route::post('user/remember-password', 'UserController@remember');
+	Route::post('/user/remember-password', 'Auth\PasswordController@postEmail');
 	//Tags routes
 	Route::post('tags/delete', 'TagController@delete');
 	Route::get('tags/get-tags-user', 'TagController@getTagsUser');

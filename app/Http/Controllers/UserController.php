@@ -9,6 +9,7 @@ use View;
 use Redirect;
 use Response;
 use Input;
+use Mail;
 use Hash;
 use Illuminate\Database\QueryException as QueryException;
 
@@ -111,7 +112,7 @@ class UserController extends Controller {
 	public function remember(){
 		$user = User::where('email', '=', Input::get('email'))->first();
 		if($user != null){
-			Mail::send('emails.restorePassword', ['user' => $user], function($message)
+			Mail::send('emails.password', ['user' => $user], function($message)
 			{
 				$message->to(Input::get('email'))->subject('Restablece tu contraseña');
 			});

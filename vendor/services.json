@@ -28,8 +28,7 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\ResponseAPIServiceProvider",
-        "Tymon\\JWTAuth\\Providers\\JWTAuthServiceProvider"
+        "App\\Providers\\ResponseAPIServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -49,8 +48,7 @@
         "App\\Providers\\ConfigServiceProvider",
         "App\\Providers\\EventServiceProvider",
         "App\\Providers\\RouteServiceProvider",
-        "App\\Providers\\ResponseAPIServiceProvider",
-        "Tymon\\JWTAuth\\Providers\\JWTAuthServiceProvider"
+        "App\\Providers\\ResponseAPIServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",
