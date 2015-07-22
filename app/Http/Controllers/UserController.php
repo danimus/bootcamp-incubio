@@ -38,7 +38,11 @@ class UserController extends Controller {
 	{
 		//
 	}
-
+	public function getNameUser()
+	{
+		$var=  Auth::user()->name;
+		return response()->json($var);
+	}
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -93,6 +97,20 @@ class UserController extends Controller {
 		}
 	}
 
+	private function saveUser($name, $email, $password){
+		$user = new User;
+		$token  = UserController::getToken(12);
+		$user ->token = $token;
+		$user->name =  $name;
+		$user->email =  $email;
+		$user->password = Hash::make($password);
+		Mail::send('emails.confirmation', array('user' => $user, 'token' => $token), function($message) use ($user)
+			{
+			  $message->to($user->email)->subject('Confirmar Mail');
+			});
+		$user->save();
+	}
+
 	public function register(Request $request){
 		try{
 			$name=$request->input('name');	
@@ -111,42 +129,40 @@ class UserController extends Controller {
 							if($password==$password2){
 								//minimum password length
 								if(strlen($password)>=6){
-
-									$token  = UserController::getToken(12);
-
-									$user = new User;
-									$user->name =  $name;
-									$user->email =  $email;
-									$user ->token = $token;
-									var_dump($user->token);
-									Mail::send('emails.confirmation', array('user' => $user, 'token' => $token), function($message) use ($user)
-										{
-										  $message->to($user->email)->subject('Confirmar Mail');
-										});
-									$user->save();
-									return response()->api("yes","User created successfully","");
+									$this->saveUser($name,$email,$password);
+									$success="yes";
+									$msg="User created successfully";
 								}else{
-									return response()->api("no","Password too short, minimum 6 characters","");
+									$success="no";
+									$msg="Password too short, minimum 6 characters";
 								}
 							}else{
-								return response()->api("no","Passwords don't match","");
+								$success="no";
+								$msg="Passwords don't match";	
 							}
 						}else{
-							return response()->api("no","Passwords required","");
-						}
-					}else{								
-						return response()->api("no","Invalid e-mail format","");
-					}
+							$success="no";
+							$msg="Passwords required";
+						}							
+					}else{			
+						$success="no";
+						$msg="Invalid e-mail format";		
+					}				
 				}else{
-					return response()->api("no","E-mail is required","");
-				}
+					$success="no";
+					$msg="E-mail is required";
+				}	
 			}else{
-				return response()->api("no","Name is required","");
-			}	
-		}catch (QueryException $e) {
-			return response()->api("no","error while saving","");
+				$success="no";
+				$msg="Name is required";	
+			}
 
+		}catch (QueryException $e) {
+
+			$success="no";
+			$msg="Error while saving user";
 		}
+		return response()->api($success,$msg,"");
 	}
 
 
@@ -199,7 +215,7 @@ class UserController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		// 
 	}
 
 	private function crypto_rand_secure($min, $max) {

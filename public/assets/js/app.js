@@ -1,5 +1,4 @@
-
-var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
+var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate','ngTagsInput']);
 
 app.config(['growlProvider', function(growlProvider) {
     growlProvider.globalTimeToLive(2000);
@@ -32,6 +31,11 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/confirmation.html',
 		controller:'ConfirmationController'
 	})
+    
+    .when('/tags', {
+	    templateUrl: 'templates/tags.html',
+	    controller:'TagsInputController'
+  	})
     .otherwise({
             redirectTo: '/login'
     });
@@ -40,9 +44,14 @@ angular.module('mediatweet').config(function($routeProvider) {
 
 /*    controllers     */
 
-app.controller('HomeController',function(){
-	
-});
+app.controller('HomeController',['$scope', '$http', function($scope, $http){
+        $scope.variable="Bienvenido al Servicio MediaTweet";
+        $http.get('api/v1/user/nameuser').
+	        success(function(data) {
+	                $scope.name=data;
+	                console.log(data);
+	        });
+}]);
 
 app.controller('ConfirmationController',['$scope','$http', 'growl', '$routeParams','$location' , function($scope, $http, growl,$routeParams,$location){
 	/*$scope.confirmationUser = function(){
@@ -65,6 +74,7 @@ app.controller('ConfirmationController',['$scope','$http', 'growl', '$routeParam
 }]);
 
 app.controller('LoginController',['$scope', '$http', 'growl', '$location', function($scope, $http, growl, $location){
+
 	$scope.forgetPassword = function(){
 		$location.path('/remember').replace();
 	}
@@ -147,3 +157,37 @@ app.controller('RestoreController',['$scope','$http', 'growl', '$routeParams','$
 			});
 	}
 }]);
+
+
+app.controller('TagsInputController',function($scope,$http){
+
+  $scope.ApiResultGetTags=[];
+  
+  
+  $http.get('/api/v1/tags/get-tags-user').
+     success(function(data) {
+      for (var i = 0; i < data.body[0].length; i++) {
+        $scope.ApiResultGetTags[i]=angular.fromJson(data.body[0][i])[0];
+       
+              };
+     
+     });
+  $scope.AddTagFunction=function($tag){
+    
+     $http.post('/api/v1/tags/add', {tagname: $tag.tagname}).
+         success(function(data) {
+
+         });    
+  };// Finaliza la funcion AddTagFunction
+
+
+  $scope.RemoveTagFunction=function($tag){
+
+     $http.post('/api/v1/tags/delete', {tagname: $tag.tagname}).
+         success(function(data) {
+          console.log(data);
+         });    
+  };// Finaliza la funcion AddTagFunction
+
+});
+

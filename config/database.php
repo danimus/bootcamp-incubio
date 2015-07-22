@@ -83,6 +83,7 @@ return [
 			'password' => env('DB_PASSWORD', ''),
 			'prefix'   => '',
 		],
+		
 
 		'mongodb' => array(
 		'driver' => 'mongodb',

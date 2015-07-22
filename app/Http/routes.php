@@ -28,6 +28,8 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 	Route::post('user/remember-password', 'UserController@remember');
 	Route::post('user/reset-password', 'UserController@reset');
 	Route::get('user/confirmateemail/', 'UserController@confirmate');
+	Route::get('user/nameuser', 'UserController@getNameUser');
+	//Route::get('user/restore/{token?}', 'UserController@restore');
 	
 	//Tags routes
 	Route::post('tags/delete', 'TagController@delete');
