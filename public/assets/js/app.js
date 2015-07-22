@@ -79,7 +79,7 @@ app.controller('RegisterController',function($scope, $http, growl,$location){
 				if($success=="yes"){
 					growl.success($message,{title: 'Success message',
 						onclose: function(){ 
-							$location.path('/home').replace();
+							$location.path('/login').replace();
 						}
 					});
 				}else{

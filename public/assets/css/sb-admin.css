@@ -51,6 +51,7 @@ body {
 @media(min-width:768px) {
     #page-content{
         padding: 70px 20px 20px 20px !important;
+        margin-left: 225px !important;
     }
 }
 #page-content{
@@ -58,6 +59,7 @@ body {
     height: 420px;
     width: 100%;
     padding: 120px 20px 20px 20px;
+    margin-left: 0px;
 }
 
 
