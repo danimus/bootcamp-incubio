@@ -1,5 +1,4 @@
-
-var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate']);
+var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate','ngTagsInput']);
 
 app.config(['growlProvider', function(growlProvider) {
     growlProvider.globalTimeToLive(2000);
@@ -28,7 +27,11 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/restore_password.html',
 		controller:'RestoreController'
 	})
-    .otherwise({
+  .when('/tags', {
+    templateUrl: 'templates/tags.html',
+    controller:'TagsInputController'
+  })
+  .otherwise({
             redirectTo: '/login'
     });
 });
@@ -120,3 +123,37 @@ app.controller('RestoreController',['$scope', '$http', 'growl', function($scope,
 			});
 	}
 }]);
+
+
+app.controller('TagsInputController',function($scope,$http){
+
+  $scope.ApiResultGetTags=[];
+  
+  
+  $http.get('/api/v1/tags/get-tags-user').
+     success(function(data) {
+      for (var i = 0; i < data.body[0].length; i++) {
+        $scope.ApiResultGetTags[i]=angular.fromJson(data.body[0][i])[0];
+       
+              };
+     
+     });
+  $scope.AddTagFunction=function($tag){
+    
+     $http.post('/api/v1/tags/add', {tagname: $tag.tagname}).
+         success(function(data) {
+
+         });    
+  };// Finaliza la funcion AddTagFunction
+
+
+  $scope.RemoveTagFunction=function($tag){
+
+     $http.post('/api/v1/tags/delete', {tagname: $tag.tagname}).
+         success(function(data) {
+          console.log(data);
+         });    
+  };// Finaliza la funcion AddTagFunction
+
+});
+
