@@ -37,7 +37,11 @@ class UserController extends Controller {
 	{
 		//
 	}
-
+	public function getNameUser()
+	{
+		$var=  Auth::user()->name;
+		return response()->json($var);
+	}
 	/**
 	 * Store a newly created resource in storage.
 	 *

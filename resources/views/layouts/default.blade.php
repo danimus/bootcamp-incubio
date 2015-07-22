@@ -7,9 +7,9 @@
     <div class="container-fluid">
 
         <header class="row">
-
             @if(Auth::check())
                 @include('includes.header_admin')
+
             @else
                 @include('includes.header2')
             @endif
