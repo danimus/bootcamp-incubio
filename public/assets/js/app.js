@@ -39,11 +39,17 @@ angular.module('mediatweet').config(function($routeProvider) {
 
 /*    controllers     */
 
-app.controller('HomeController',function(){
-
-});
+app.controller('HomeController',['$scope', '$http', function($scope, $http){
+        $scope.variable="Bienvenido al Servicio MediaTweet";
+        $http.get('api/v1/user/nameuser').
+	        success(function(data) {
+	                $scope.name=data;
+	                console.log(data);
+	        });
+}]);
 
 app.controller('LoginController',['$scope', '$http', 'growl', '$location', function($scope, $http, growl, $location){
+
 	$scope.forgetPassword = function(){
 		$location.path('/remember').replace();
 	}

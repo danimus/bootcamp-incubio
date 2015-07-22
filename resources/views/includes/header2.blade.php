@@ -10,13 +10,13 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">MEDIATWEET</a>
+			<a class="navbar-brand" href="#">MEDIATWEET</a>
 		</div>
 		<!-- Top Menu Items -->
 		<ul class="nav navbar-right top-nav">
 
-			<a class="menu-item" href="#/login">Iniciar sesión</a>
-			<a class="menu-item" href="#/register">Regístrate</a>
+			<a class="menu-item" href="#/login">Sign in</a>
+			<a class="menu-item" href="#/register">Sign up</a>
 
 			<!--
 			<li class="dropdown">
