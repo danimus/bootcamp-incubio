@@ -11,6 +11,10 @@ use Response;
 use Input;
 use Hash;
 use Illuminate\Database\QueryException as QueryException;
+use ResetsPasswords;
+use Mail;
+use Password;
+use Illuminate\Auth\Passwords\PasswordBroker;
 
 class UserController extends Controller {
 
@@ -142,12 +146,11 @@ class UserController extends Controller {
 			{
 				$message->to(Input::get('email'))->subject('Restablece tu contraseña');
 			});
-			return response()->api("yes","mail send","");
+			return response()->api("yes","Mail send, please check your mailbox","");
 		}else{
-			return response()->api("no","mail send failed","");
+			return response()->api("no","Mail do not send, please try again","");
 		}		
 	}
-
 
 	public function reset(){
 		$user = User::where('email', '=', Input::get('email'))->first();
@@ -163,7 +166,10 @@ class UserController extends Controller {
 		}else{
 			return response()->api("no","Passwords don't match","");	
 		}
-		
+	}
+
+	public function restore(){
+		return View::make('auth/reset');
 	}
 
 	/**
