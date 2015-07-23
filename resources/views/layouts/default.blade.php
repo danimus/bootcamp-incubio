@@ -18,11 +18,18 @@
 
         <!-- #page-wrapper -->
         <div id="page-wrapper">
-            <div id="page-content">
+
+            @if(Auth::check())
+                <div id="page-content-admin">
+            @else
+                <div id="page-content">
+            @endif
+
 
 
                     <ng-view></ng-view>
-                    
+
+    <!--<ng-include-->
 
             </div>
         </div>
