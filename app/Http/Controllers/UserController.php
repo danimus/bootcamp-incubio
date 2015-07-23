@@ -184,7 +184,7 @@ class UserController extends Controller {
 
 	public function reset(Request $request){
 		$token = $request -> input('token');
-		$user = User::where('token', '=', Input::get('token'))->first();
+		$user = User::where('token', '=', $token)->first();
 		if ($user == null) return response() -> api('no', 'Password recovery progress error', "");
 		else if($request -> input('password') == $request -> input('passwordconfirmation')){
 			$user->password = Hash::make(Input::get('password'));

@@ -9,7 +9,7 @@
         <div>
             Puedes confirmar tu mail a través de esta dirrección:
 
-            {{ URL::to('#/user-confirmation/?token=' .$token) }}.<br/>
+            {{ URL::to('/#/user-confirmation/?token=' .$token) }}.<br/>
 
             Equipo MediaTweet.
 

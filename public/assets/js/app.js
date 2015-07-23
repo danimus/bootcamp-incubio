@@ -54,8 +54,8 @@ app.controller('HomeController',['$scope', '$http', function($scope, $http){
 }]);
 
 app.controller('ConfirmationController',['$scope','$http', 'growl', '$routeParams','$location' , function($scope, $http, growl,$routeParams,$location){
-	/*$scope.confirmationUser = function(){
-		$http.post('api/v1/user/confirmateemail/', {token:$routeParams.token}).
+	$scope.confirmationUser = function(){
+		$http.get('api/v1/user/confirmateemail/?token=' + $routeParams.token).
 			success(function(data) {
 				if(data.header.success == "yes"){
 					growl.success(data.header.msg,{title: 'Success message',
@@ -70,7 +70,7 @@ app.controller('ConfirmationController',['$scope','$http', 'growl', '$routeParam
 			}).error(function(data) {
 				growl.info('Error connection, please try again',{title: 'Error message'});
 			});
-	}*/
+	}
 }]);
 
 app.controller('LoginController',['$scope', '$http', 'growl', '$location', function($scope, $http, growl, $location){
