@@ -1,4 +1,7 @@
 /bootstrap/compiled.php
 .env.*.php
 .env.php
+<<<<<<< HEAD
 storage/**
+=======
+>>>>>>> 791770cf11435b7cdf66f33ff0ba3b8877066b76

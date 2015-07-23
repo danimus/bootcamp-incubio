@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 use View;
 
-
 class HomeController extends Controller {
 
 	/*
@@ -34,6 +33,12 @@ class HomeController extends Controller {
 	{	
 
 		return View::make('pages.home');
+	}
+
+		public function reset()
+	{	
+
+		return View::make('pages.reset');
 	}
 
 }
