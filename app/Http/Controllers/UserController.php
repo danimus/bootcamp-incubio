@@ -86,8 +86,14 @@ class UserController extends Controller {
 		//
 	}
 
+	public function logOut(){
+		Auth::logout();
+		return response()->api("yes","Logged out successfully","");
+
+	}
+
 	
-	public function login(){
+	public function logIn(){
 		$email=Input::get('email');
 		$password=Input::get('password');
 		$user = User::where('email', '=', $email)->first();
@@ -98,7 +104,7 @@ class UserController extends Controller {
 			} else {
 				if ($user->confirmed == 0){
 					$success="no";
-					$msg="Your account is not activated";
+					$msg="Your account is not activated, check your mailbox";
 				}else if(Auth::attempt(array('email'=>$email, 'password'=>$password))){
 					$success="yes";
 					$msg="Logged in successfully";

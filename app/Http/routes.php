@@ -24,7 +24,8 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 {
 	//User routes
 	Route::post('user/register', 'UserController@register');
-	Route::post('user/login', 'UserController@login');
+	Route::post('user/login', 'UserController@logIn');
+	Route::post('user/logout', 'UserController@logOut');
 	Route::post('user/remember-password', 'UserController@remember');
 	Route::post('user/reset-password', 'UserController@reset');
 	Route::get('user/confirmateemail/', 'UserController@confirmate');

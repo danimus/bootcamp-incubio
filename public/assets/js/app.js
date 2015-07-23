@@ -51,6 +51,17 @@ app.controller('HomeController',['$scope', '$http', function($scope, $http){
 	                $scope.name=data;
 	                console.log(data);
 	        });
+	  	$scope.logOut= function(){
+	  		$http.get('api/v1/user/logout').
+	        success(function(data) {
+	        	console.log(data);
+	                growl.success(data.header.msg,{title: 'Success message',
+						onclose: function(){ 
+							$location.path('/login').replace();
+						}
+	        });
+	    })};
+
 }]);
 
 app.controller('ConfirmationController',['$scope','$http', 'growl', '$routeParams','$location' , function($scope, $http, growl,$routeParams,$location){
