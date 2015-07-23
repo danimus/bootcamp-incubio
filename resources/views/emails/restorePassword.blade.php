@@ -4,14 +4,17 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <h2>Reestablecer la contraseña</h2>
+        <h2>Restore your password</h2>
 
         <div>
-            Puedes reestablecer tu contraseña con la siguiente dirección, también puedes copiarla y pegarla en la barra de dirección de tu navegador.
+            To change your password, click the link below or copy and paste it into your browser.
 
-            {{ URL::to('api/v1/user/restore/' . csrf_token()) }}.<br/>
+            {{ URL::to('/#/restore/?token=' .$token) }}.<br/>
 
-            Equipo MediaTweet.
+            If you did not request to have your password reset, no further action is necessary, but if you have any questions or need further assistance, please contact us at mediatweet.incubio@gmail.com.
+
+
+            MediaTweet team.
 
         </div>
 

@@ -3,38 +3,39 @@
 		<div class="modal-content">
 			<div class="panel-heading">
 				<h2>Register</h2>
+
 			</div>
 			<div class="panel-body">
 				<form ng-submit="registerSubmit()">
 					<div growl></div>
 					<!--name-->
 					<div class="form-group">
-						<label for="name">Name: </label>
+						<label for="name">Name </label>
 						<input ng-model="user.name" id="name" name="name" type="text"/>
 						
 					</div>
 					<!--email-->
 					<div class="form-group">
-						<label for="email">Email: </label>
+						<label for="email">Email </label>
 						<input ng-model="user.email" id="email" name="email" type="text"/>
 						
 					</div>
 					
 					<!--password-->
 					<div class="form-group">
-						<label for="password">Password: </label>
+						<label for="password">Password </label>
 						<input ng-model="user.password" id="password" name="password" type="password" />
 					</div>
 
 					<!--password again-->
 					<div class="form-group">
-						<label for="password2">Password: </label>
+						<label for="password2">Password </label>
 						<input ng-model="user.password2" id="password2" name="password2" type="password" />
 						
 
 					<!--nickname twitter-->
 					<div class="form-group">
-						<label for="username">Twitter username: </label>
+						<label for="username">Twitter username (optional) </label>
 						
 							<input ng-model="user.username" id="username" name="username" type="text" />
 					</div>

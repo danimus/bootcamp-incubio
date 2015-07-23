@@ -15,6 +15,7 @@ use ResetsPasswords;
 use Mail;
 use Password;
 use Illuminate\Auth\Passwords\PasswordBroker;
+use Log;
 
 class UserController extends Controller {
 
@@ -87,20 +88,43 @@ class UserController extends Controller {
 
 	
 	public function login(){
-
-		if(Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))){
-			return response()->api("yes","Logged in successfully","");
+		$email=Input::get('email');
+		$password=Input::get('password');
+		$user = User::where('email', '=', $email)->first();
+		if(!(empty($email) || empty($password))){
+			if ($user == null){
+				$success="no";
+				$msg="You are not registered";
+			} else {
+				if ($user->confirmed == 0){
+					$success="no";
+					$msg="Your account is not activated";
+				}else if(Auth::attempt(array('email'=>$email, 'password'=>$password))){
+					$success="yes";
+					$msg="Logged in successfully";
+				}else if ($user-> password != $password){
+					$success="no";
+					$msg="Your password is incorrect";			}			
+			}
+		}else{
+			$success="no";
+			$msg="There are some empty fields";
 		}
-		else{
-			return response()->api("no","Auth failed","");
-		}
+		return response()-> api($success,$msg,"");
+		
 	}
 
 	private function saveUser($name, $email, $password){
 		$user = new User;
+		$token  = UserController::getToken(12);
+		$user ->token = $token;
 		$user->name =  $name;
 		$user->email =  $email;
 		$user->password = Hash::make($password);
+		Mail::send('emails.confirmation', array('user' => $user, 'token' => $token), function($message) use ($user)
+			{
+			  $message->to($user->email)->subject('Confirmar Mail');
+			});
 		$user->save();
 	}
 
@@ -151,16 +175,21 @@ class UserController extends Controller {
 			}
 
 		}catch (QueryException $e) {
+
 			$success="no";
-			$msg="Error while saving user";
+			$msg="This e-mail is already registered";
 		}
 		return response()->api($success,$msg,"");
 	}
 
+
 	public function remember(){
 		$user = User::where('email', '=', Input::get('email'))->first();
+		$token = UserController::getToken(12);
+		$user -> token = $token;
+		$user -> save(); 
 		if($user != null){
-			Mail::send('emails.restorePassword', ['user' => $user], function($message)
+			Mail::send('emails.restorePassword', array('user' => $user, 'token' => $token ), function($message)
 			{
 				$message->to(Input::get('email'))->subject('Restablece tu contraseña');
 			});
@@ -170,24 +199,29 @@ class UserController extends Controller {
 		}		
 	}
 
-	public function reset(){
-		$user = User::where('email', '=', Input::get('email'))->first();
-		if(Input::get('password') == Input::get('password_confirmation')){
+	public function reset(Request $request){
+		$token = $request -> input('token');
+		$user = User::where('token', '=', $token)->first();
+		if ($user == null) return response() -> api('no', 'Password recovery progress error', "");
+		else if($request -> input('password') == $request -> input('passwordconfirmation')){
 			$user->password = Hash::make(Input::get('password'));
+			$user->token = '0';
 			try{
 				$user->save();	
+
 			}
 			catch(QueryException $e){
-				return response()->api("no","Error while saving user","");
+				return response()->api("no","This e-mail is not in use","");
 			}
-			return response()->api("yes","Reset password".Input::get('password'),"");	
+			return response()->api("yes","Reset password",Input::get('password'));	
 		}else{
 			return response()->api("no","Passwords don't match","");	
 		}
 	}
 
-	public function restore(){
-		return View::make('auth/reset');
+	public function restore($token){
+
+		return View::make('auth/reset')->with('token',$token);
 	}
 
 	/**
@@ -199,6 +233,47 @@ class UserController extends Controller {
 	public function destroy($id)
 	{
 		// 
+	}
+
+	private function crypto_rand_secure($min, $max) {
+        $range = $max - $min;
+        if ($range < 0) return $min; // not so random...
+        $log = log($range, 2);
+        $bytes = (int) ($log / 8) + 1; // length in bytes
+        $bits = (int) $log + 1; // length in bits
+        $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+        do {
+            $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
+            $rnd = $rnd & $filter; // discard irrelevant bits
+        } while ($rnd >= $range);
+        return $min + $rnd;
+	}
+
+	public function getToken($length){
+	    $token = "";
+	    $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+	    $codeAlphabet.= "0123456789";
+	    for($i=0;$i<$length;$i++){
+	        $token .= $codeAlphabet[UserController::crypto_rand_secure(0,strlen($codeAlphabet))];
+	    }
+	    return $token;
+	}
+
+
+	public function confirmate(Request $request) {
+
+		$token = $request -> input('token');
+		$user = User::where('token','=',$token)-> first();
+
+		if ($user != null) {
+			$user-> token = '0';
+			$user -> confirmed = '1';
+			$user -> save();
+			return response() -> api("yes", "Successfully confirmed", "");
+		}
+		else return response() -> api("no", "Problems with confirmation progress","");
+			
 	}
 
 }
