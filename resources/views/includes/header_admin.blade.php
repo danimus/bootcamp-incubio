@@ -1,4 +1,4 @@
-<div ng-controller="HomeController" id="wrapper" >
+<div ng-controller="HomeController" ng-app="mediatweet" id="wrapper" >
 
 	<!-- Navigation -->
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -10,15 +10,15 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">MEDIATWEET</a>
+			<a class="navbar-brand" href="#/home">MEDIATWEET</a>
 		</div>
 		<!-- Top Menu Items -->
 		<ul class="nav navbar-right top-nav">
 			<li class="dropdown" >
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-user"></i><b class="caret"></b></a>
+				<a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <% name %><b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="#"><i class="fa fa-fw fa-power-off" ng-click="logOut()"></i> Log Out</a>
+						<a href="/user/logout"><i class="fa fa-fw fa-power-off" ></i> Log Out</a>
 					</li>
 				</ul>
 			</li>
@@ -27,10 +27,10 @@
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav side-nav">
 				<li class="active">
-					<a href="#"><i class="fa fa-fw fa-dashboard"></i>Tags</a>
+					<a href="#/tags"><i class="fa fa-twitter" ></i>	    Tags</a>
 				</li>
 				<li>
-					<a href="#"><i class="fa fa-fw fa-bar-chart-o"></i>Statistics</a>
+					<a href=""><i class="fa fa-bar-chart" ></i>	    Statistics</a>
 				</li>
 			</ul>
 		</div>

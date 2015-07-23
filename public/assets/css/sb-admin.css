@@ -17,6 +17,10 @@ body {
     }
 }
 
+
+
+
+
 #wrapper {
     padding-left: 0;
 }
@@ -46,16 +50,21 @@ body {
         background-color: #fff;
         width: 100%;
     }
-}
-
-@media(min-width:768px) {
-    #page-content{
+    #page-content-admin{
         padding: 70px 20px 20px 20px !important;
         margin-left: 225px !important;
     }
+    #page-content{
+        padding: 70px 20px 20px 20px !important;
+        margin-left: 0px !important;
+        width: 100%;
+    }
 }
-#page-content{
-    /*background-color: rgb(78, 185, 210);*/
+
+
+
+#page-content-admin{
+    background-color: rgb(78, 185, 210);
     height: 420px;
     width: 100%;
     padding: 120px 20px 20px 20px;

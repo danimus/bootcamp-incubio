@@ -75,21 +75,15 @@ class UserController extends Controller {
 		//
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
+
+	public function postLogin()
 	{
-		//
+		return redirect('http://bootcamp.incubio.com:8080/#/home');
 	}
 
 	public function logOut(){
 		Auth::logout();
-		return response()->api("yes","Logged out successfully","");
-
+		return redirect('/');
 	}
 
 	
@@ -110,7 +104,8 @@ class UserController extends Controller {
 					$msg="Logged in successfully";
 				}else if ($user-> password != $password){
 					$success="no";
-					$msg="Your password is incorrect";			}			
+					$msg="Your password is incorrect";			
+				}			
 			}
 		}else{
 			$success="no";
