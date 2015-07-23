@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration {
 			$table->rememberToken();
 			$table->timestamps();
 			$table->string('user_twitter');
+			$table->string('token', 12) -> default(0);
 		});
 	}
 
