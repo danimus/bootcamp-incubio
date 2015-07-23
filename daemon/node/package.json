@@ -1,0 +1,9 @@
+{
+    "name": "mediatweet",
+    "version": "0.0.1",
+    "dependencies": {
+
+        "mongoose": "*",
+        "twitter": "*"
+    }
+}
