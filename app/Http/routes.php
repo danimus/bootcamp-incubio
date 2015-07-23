@@ -37,9 +37,9 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 	Route::get('tags/get-tags-user', 'TagController@getTagsUser');
 	Route::post('tags/add', 'TagController@addNewTag');
 	//Statistics routes
-	Route::get('statistics/global-trends', 'StatisticsController@index');
-	Route::get('statistics/local-trends', 'StatisticsController@index');
-	Route::get('statistics/user-tags', 'StatisticsController@index');
+	Route::get('statistics/global-trends', 'StatisticsController@getGlobalTrends');
+	Route::get('statistics/local-trends', 'StatisticsController@getLocalTrends');
+	Route::get('statistics/user-tags', 'StatisticsController@getUserTags');
 });
 
 Route::get('/tags/{id}', 'TagController@show');
