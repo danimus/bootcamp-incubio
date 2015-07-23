@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Elasticsearch\Client as Es;
 
 class StatisticsController extends Controller {
 
@@ -12,73 +14,42 @@ class StatisticsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getGlobalTrends()
 	{
-		return "Inside StatisticsController";
+
+		$params['index'] = 'twitterstream';
+		$params['body'] = array(
+			'aggs' => array(
+				'trendingtopics' => array(
+					'date_histogram' => array(
+						'field'=>'created_at',
+						'interval'=>'minute'
+						),
+					)
+				),
+			'size'=>0
+			);
+
+		$result = new Es();
+		$result = $result->search($params);
+
+		return response()->json($result['aggregations']['trendingtopics']['buckets']);
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
+	public function getLocalTrends(){
+
+		//To be implemented
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
+
+	public function getLocalTrends(){
+
+		//To be implemented
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+	public function getUserTags(){
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		//To be implemented
 	}
 
 }
