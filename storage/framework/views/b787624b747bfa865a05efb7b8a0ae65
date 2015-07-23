@@ -33,3 +33,7 @@
 <script type="text/javascript" src="/assets/js/validation.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js"></script>
 
+<!--statistics-->
+<script src="/bower_components/d3/d3.js"></script>
+<script src="/bower_components/n3-line-chart/build/line-chart.min.js"></script>
+

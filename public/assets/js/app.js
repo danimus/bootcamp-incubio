@@ -1,4 +1,5 @@
-var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate','ngTagsInput'],function($interpolateProvider) {
+var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate','ngTagsInput',
+	'n3-charts.linechart'],function($interpolateProvider) {
        $interpolateProvider.startSymbol('<%');
        $interpolateProvider.endSymbol('%>');});
 
@@ -54,10 +55,38 @@ angular.module('mediatweet').config(function($routeProvider) {
 
 
 /*    controllers     */
-app.controller('StatisticsController',['$scope', '$http','$location', function($scope, $http, $location){
-	
 
-}]);
+app.controller('StatisticsController', function($scope, $http){
+        $http.get('/api/v1/statistics/global-trends').
+                success(function(data) {
+                        $scope.data = data;
+                }
+    );    
+ 
+        $scope.options = {
+                axes: {
+                        x: {
+                                type: 'date',
+                                key: "key"
+                        }
+        },
+        series: [
+        {
+                y: "doc_count",
+                label: "A time series",
+                color: "#9467bd"
+        }
+        ],
+        tooltip: {
+                mode: "scrubber"
+        }
+        };
+        $scope.data.forEach(function(row) {
+                row.x = new Date(row.x);
+        });
+});
+
+
 
 
 app.controller('HomeController',['$scope', '$http','$location', function($scope, $http, $location){
