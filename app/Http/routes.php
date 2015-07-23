@@ -17,7 +17,8 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/reset-password', 'HomeController@reset');
 
-
+Route::get('/user/logout', 'UserController@logOut');
+Route::get('/postlogin','UserController@postLogin');
 
 //Pages for logged users
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
@@ -25,7 +26,7 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 	//User routes
 	Route::post('user/register', 'UserController@register');
 	Route::post('user/login', 'UserController@logIn');
-	Route::post('user/logout', 'UserController@logOut');
+	Route::get('user/logout', 'UserController@logOut');
 	Route::post('user/remember-password', 'UserController@remember');
 	Route::post('user/reset-password', 'UserController@reset');
 	Route::get('user/confirmateemail/', 'UserController@confirmate');
@@ -40,6 +41,7 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth'), function()
 	Route::get('statistics/global-trends', 'StatisticsController@index');
 	Route::get('statistics/local-trends', 'StatisticsController@index');
 	Route::get('statistics/user-tags', 'StatisticsController@index');
+
 });
 
 Route::get('/tags/{id}', 'TagController@show');
