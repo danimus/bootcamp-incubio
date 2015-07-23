@@ -88,13 +88,30 @@ class UserController extends Controller {
 
 	
 	public function login(){
-
-		if(Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))){
-			return response()->api("yes","Logged in successfully","");
+		$email=Input::get('email');
+		$password=Input::get('password');
+		$user = User::where('email', '=', $email)->first();
+		if(!(empty($email) || empty($password))){
+			if ($user == null){
+				$success="no";
+				$msg="You are not registered";
+			} else {
+				if ($user->confirmed == 0){
+					$success="no";
+					$msg="Your account is not activated";
+				}else if(Auth::attempt(array('email'=>$email, 'password'=>$password))){
+					$success="yes";
+					$msg="Logged in successfully";
+				}else if ($user-> password != $password){
+					$success="no";
+					$msg="Your password is incorrect";			}			
+			}
+		}else{
+			$success="no";
+			$msg="There are some empty fields";
 		}
-		else{
-			return response()->api("no","Auth failed","");
-		}
+		return response()-> api($success,$msg,"");
+		
 	}
 
 	private function saveUser($name, $email, $password){
@@ -160,7 +177,7 @@ class UserController extends Controller {
 		}catch (QueryException $e) {
 
 			$success="no";
-			$msg="Error while saving user";
+			$msg="This e-mail is already registered";
 		}
 		return response()->api($success,$msg,"");
 	}
@@ -194,7 +211,7 @@ class UserController extends Controller {
 
 			}
 			catch(QueryException $e){
-				return response()->api("no","Error while saving user","");
+				return response()->api("no","This e-mail is not in use","");
 			}
 			return response()->api("yes","Reset password",Input::get('password'));	
 		}else{
@@ -253,9 +270,9 @@ class UserController extends Controller {
 			$user-> token = '0';
 			$user -> confirmed = '1';
 			$user -> save();
-			return response() -> api("yes", "successfully confirmed", "");
+			return response() -> api("yes", "Successfully confirmed", "");
 		}
-		else return response() -> api("no", "problems with confirmation progress","");
+		else return response() -> api("no", "Problems with confirmation progress","");
 			
 	}
 

@@ -4,14 +4,19 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <h2>Reestablecer la contraseña</h2>
+        <h2>Verify your e-mail</h2>
 
         <div>
-            Puedes confirmar tu mail a través de esta dirrección:
+
+            Welcome to MediaTweet,
+
+            Please verify your e-mail address to activate your MediaTweet account.
+            It's easy, just click on the link below:
 
             {{ URL::to('/#/user-confirmation/?token=' .$token) }}.<br/>
 
-            Equipo MediaTweet.
+            Thank you,
+            MediaTweet team.
 
         </div>
 

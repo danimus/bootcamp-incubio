@@ -15,7 +15,7 @@
 		<!-- Top Menu Items -->
 		<ul class="nav navbar-right top-nav">
 
-			<a class="menu-item" href="#/login">Sign in</a>
+			<a class="menu-item" href="#/login">Log in</a>
 			<a class="menu-item" href="#/register">Sign up</a>
 
 			<!--

@@ -1,7 +1,7 @@
 var app= angular.module('mediatweet', ['ngResource','ngRoute','angular-growl','ngAnimate','ngTagsInput']);
 
 app.config(['growlProvider', function(growlProvider) {
-    growlProvider.globalTimeToLive(2000);
+    growlProvider.globalTimeToLive(3000);
     growlProvider.globalPosition('top-right');
 }]);
 
@@ -106,7 +106,10 @@ app.controller('RegisterController',function($scope, $http, growl,$location){
 				$success=data.header.success;
 				$message=data.header.msg;
 				if($success=="yes"){
-					growl.success($message,{title: 'Success message',
+					growl.success($message,{title: 'Success message'
+					});
+
+					growl.success("Check your mailbox to activate your account " ,{title: 'Success message',
 						onclose: function(){ 
 							$location.path('/login').replace();
 						}
