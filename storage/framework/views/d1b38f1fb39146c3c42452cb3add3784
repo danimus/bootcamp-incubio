@@ -17,7 +17,7 @@
         </header>
 
         <!-- #page-wrapper -->
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="height:1500px">
             <div id="page-content">
 
 

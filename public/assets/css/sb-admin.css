@@ -19,8 +19,6 @@ body {
 
 
 
-
-
 #wrapper {
     padding-left: 0;
 }
@@ -38,6 +36,8 @@ body {
     line-height: normal;
 }
 
+
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 225px;
@@ -53,6 +53,7 @@ body {
     #page-content-admin{
         padding: 70px 20px 20px 20px !important;
         margin-left: 225px !important;
+        margin-right: -55px !important;
     }
     #page-content{
         padding: 70px 20px 20px 20px !important;

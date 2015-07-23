@@ -18,6 +18,10 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/register.html',
 		controller: 'RegisterController'
 	})
+	.when('/about-us', {
+		templateUrl: 'templates/about_us.html',
+		controller: 'HomeController'
+	})
 	.when('/remember', {
 		templateUrl: 'templates/remember_password.html',
 		controller: 'RememberPasswordController'
@@ -47,12 +51,15 @@ angular.module('mediatweet').config(function($routeProvider) {
 
 /*    controllers     */
 
-app.controller('HomeController',['$scope', '$http', function($scope, $http){
+app.controller('HomeController',['$scope', '$http','$location', function($scope, $http, $location){
 	$http.get('api/v1/user/nameuser').
 	success(function(data) {
 		$scope.name=data;
 		console.log(data);
 	});
+	$scope.aboutUs= function(){
+		$location.path('/about-us').replace();
+	};
 
 }]);
 
