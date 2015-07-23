@@ -56,13 +56,218 @@ angular.module('mediatweet').config(function($routeProvider) {
 
 /*    controllers     */
 
-app.controller('StatisticsController', function($scope, $http){
-        $http.get('/api/v1/statistics/global-trends').
+app.controller('StatisticsController', function($scope){
+        /*$http.get('/api/v1/statistics/global-trends').
                 success(function(data) {
                         $scope.data = data;
                 }
-    );    
+    );  */  
+ 		$scope.data=[
  
+{
+ 
+    "key_as_string": "2015-07-23T10:56:00.000Z",
+    "key": 1437648960000,
+    "doc_count": 21
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T10:57:00.000Z",
+    "key": 1437649020000,
+    "doc_count": 102
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T10:58:00.000Z",
+    "key": 1437649080000,
+    "doc_count": 1538
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T10:59:00.000Z",
+    "key": 1437649140000,
+    "doc_count": 2750
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:00:00.000Z",
+    "key": 1437649200000,
+    "doc_count": 2839
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:01:00.000Z",
+    "key": 1437649260000,
+    "doc_count": 2843
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:02:00.000Z",
+    "key": 1437649320000,
+    "doc_count": 1227
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:03:00.000Z",
+    "key": 1437649380000,
+    "doc_count": 538
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:04:00.000Z",
+    "key": 1437649440000,
+    "doc_count": 2675
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:05:00.000Z",
+    "key": 1437649500000,
+    "doc_count": 2652
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:06:00.000Z",
+    "key": 1437649560000,
+    "doc_count": 2624
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:07:00.000Z",
+    "key": 1437649620000,
+    "doc_count": 2602
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:08:00.000Z",
+    "key": 1437649680000,
+    "doc_count": 2635
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:09:00.000Z",
+    "key": 1437649740000,
+    "doc_count": 2668
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:10:00.000Z",
+    "key": 1437649800000,
+    "doc_count": 2553
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:11:00.000Z",
+    "key": 1437649860000,
+    "doc_count": 2655
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:12:00.000Z",
+    "key": 1437649920000,
+    "doc_count": 2640
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:13:00.000Z",
+    "key": 1437649980000,
+    "doc_count": 2308
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:14:00.000Z",
+    "key": 1437650040000,
+    "doc_count": 2624
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:15:00.000Z",
+    "key": 1437650100000,
+    "doc_count": 2646
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:16:00.000Z",
+    "key": 1437650160000,
+    "doc_count": 2696
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:17:00.000Z",
+    "key": 1437650220000,
+    "doc_count": 2641
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:18:00.000Z",
+    "key": 1437650280000,
+    "doc_count": 1989
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:19:00.000Z",
+    "key": 1437650340000,
+    "doc_count": 88
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:20:00.000Z",
+    "key": 1437650400000,
+    "doc_count": 39
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:23:00.000Z",
+    "key": 1437650580000,
+    "doc_count": 441
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:24:00.000Z",
+    "key": 1437650640000,
+    "doc_count": 2509
+ 
+},
+{
+ 
+    "key_as_string": "2015-07-23T11:25:00.000Z",
+    "key": 1437650700000,
+    "doc_count": 1109
+ 
+},
+ 
+    {
+        "key_as_string": "2015-07-23T14:16:00.000Z",
+        "key": 1437660960000,
+        "doc_count": 28
+    }
+ 
+];
         $scope.options = {
                 axes: {
                         x: {
