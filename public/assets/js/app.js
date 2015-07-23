@@ -43,6 +43,10 @@ angular.module('mediatweet').config(function($routeProvider) {
 		templateUrl: 'templates/tags.html',
 		controller:'TagsInputController'
 	})
+	.when('/statistics', {
+		templateUrl: 'templates/d3jsexample.html',
+		controller:'StatisticsController'
+	})
 	.otherwise({
 		redirectTo: '/login'
 	});
@@ -50,6 +54,11 @@ angular.module('mediatweet').config(function($routeProvider) {
 
 
 /*    controllers     */
+app.controller('StatisticsController',['$scope', '$http','$location', function($scope, $http, $location){
+	
+
+}]);
+
 
 app.controller('HomeController',['$scope', '$http','$location', function($scope, $http, $location){
 	$http.get('api/v1/user/nameuser').

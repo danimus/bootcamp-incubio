@@ -31,7 +31,7 @@
 					<a href="#/tags"><i class="fa fa-twitter" ></i>	    Tags</a>
 				</li>
 				<li>
-					<a href=""><i class="fa fa-bar-chart" ></i>	    Statistics</a>
+					<a href="#/statistics"><i class="fa fa-bar-chart" ></i>	    Statistics</a>
 				</li>
 			</ul>
 		</div>
