@@ -1,0 +1,18 @@
+[2015-07-20 10:42:12] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class' not found' in /var/www/app/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2015-07-20 10:42:29] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class' not found' in /var/www/app/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2015-07-20 10:43:25] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class' not found' in /var/www/app/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2015-07-20 10:43:50] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class' not found' in /var/www/app/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2015-07-20 10:46:41] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class' not found' in /var/www/app/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2015-07-20 10:47:11] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class' not found' in /var/www/app/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  

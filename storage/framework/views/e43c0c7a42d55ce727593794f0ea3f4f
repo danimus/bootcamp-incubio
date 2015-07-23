@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es" ng-app="mediatweet">
+<head>
+    <?php echo $__env->make('includes.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</head>
+<body>
+    <div class="container-fluid">
+
+        <header class="row">
+            <?php if(Auth::check()): ?>
+                <?php echo $__env->make('includes.header_admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+            <?php else: ?>
+                <?php echo $__env->make('includes.header2', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php endif; ?>
+
+        </header>
+
+        <!-- #page-wrapper -->
+        <div id="page-wrapper">
+            <div id="page-content">
+
+
+                    <ng-view></ng-view>
+                    
+
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+
+        <footer class="row">
+            <?php echo $__env->make('includes.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </footer>
+    </div>
+</body>
+</html>
