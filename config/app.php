@@ -136,6 +136,7 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Jenssegers\Mongodb\MongodbServiceProvider',
+		'Shift31\LaravelElasticsearch\ElasticsearchServiceProvider',
 
 		/*
 		 * Application Service Providers...
