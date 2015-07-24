@@ -17,8 +17,14 @@
         </header>
 
         <!-- #page-wrapper -->
-        <div id="page-wrapper" style="height:1500px">
-            <div id="page-content">
+        <div id="page-wrapper">
+            @if(Auth::check())
+                <div id="page-content-admin">
+
+            @else
+                <div id="page-content">
+            @endif
+            
 
 
                     <ng-view></ng-view>
