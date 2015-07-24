@@ -14,8 +14,15 @@
          </header>
          <!-- #page-wrapper -->
          <div id="page-wrapper">
-            <div id="page-content">
-               <div growl></div>
+            
+             @if(Auth::check())
+                <div id="page-content-admin">
+                  
+              @else
+                <div id="page-content">
+            @endif
+                <div growl></div>
+                
                <ng-view></ng-view>
             </div>
          </div>
