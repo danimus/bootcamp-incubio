@@ -18,6 +18,9 @@
 <script src="/assets/js/ng-tags-input.min.js"></script>
 <script src="/bower_components/ng-resource/dist/ng-resource.js"></script>
 <script src="/bower_components/angular-route/angular-route.js"></script>
+<!-- graphs -->
+<script src="/bower_components/d3/d3.js"></script>
+<script src="/bower_components/n3-line-chart/build/line-chart.min.js"></script>
 <!--growl-->
 <script src="/assets/js/angular-growl.min.js"></script> 
 <script src="/assets/js/angular-animate.js"></script>
